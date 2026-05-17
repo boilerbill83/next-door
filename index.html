@@ -6,51 +6,43 @@
 <title>🏡 The Big Move — June 2025</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --cream: #faf8f5;
-    --warm-white: #ffffff;
-    --navy: #1a2e4a;
-    --navy-light: #2a4a72;
-    --text: #1a2030;
-    --text-muted: #8a9ab0;
-    --border: rgba(26,46,74,0.10);
-    --shadow-sm: 0 2px 8px rgba(26,46,74,0.08);
-    --shadow: 0 4px 20px rgba(26,46,74,0.12);
-    --shadow-lg: 0 8px 32px rgba(26,46,74,0.16);
+    --bg: #f5f2ee;
+    --white: #ffffff;
+    --ink: #181520;
+    --ink-mid: #5a5468;
+    --ink-faint: #b0aab8;
+    --rule: rgba(24,21,32,0.08);
 
-    /* Phase accent colors */
-    --phase-1: #7c3aed;
-    --phase-2: #dc2626;
-    --phase-3: #0891b2;
-    --phase-4: #059669;
-    --phase-5: #d97706;
+    --c1: #6d28d9;   /* pre-move  — violet */
+    --c2: #be123c;   /* move out  — crimson */
+    --c3: #0369a1;   /* the gap   — sapphire */
+    --c4: #047857;   /* move in   — emerald */
+    --c5: #b45309;   /* settle in — amber */
 
-    /* Importance colors */
-    --imp-critical: #dc2626;
-    --imp-high: #ea580c;
-    --imp-medium: #2563eb;
-    --imp-low: #9ca3af;
+    --imp-must:   #dc2626;
+    --imp-high:   #ea580c;
+    --imp-medium: #4f46e5;
+    --imp-low:    #94a3b8;
   }
 
   html { scroll-behavior: smooth; }
 
   body {
     font-family: 'DM Sans', sans-serif;
-    background: var(--cream);
-    background-image: radial-gradient(circle at 20% 20%, rgba(124,58,237,0.04) 0%, transparent 50%),
-                      radial-gradient(circle at 80% 80%, rgba(8,145,178,0.04) 0%, transparent 50%);
-    color: var(--text);
+    background: var(--bg);
+    color: var(--ink);
     min-height: 100vh;
   }
 
-  /* ── HERO ── */
+  /* ─── HERO ─── */
   .hero {
     position: relative;
-    height: 500px;
+    height: 560px;
     overflow: hidden;
     display: flex;
     align-items: flex-end;
@@ -59,765 +51,653 @@
   .hero-img {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
+    width: 100%; height: 100%;
     object-fit: cover;
-    object-position: center 60%;
-    filter: brightness(0.65) saturate(1.2);
-    transition: transform 8s ease;
+    object-position: center 55%;
+    filter: brightness(0.55) saturate(1.15);
+    transition: transform 10s ease;
   }
 
-  .hero:hover .hero-img { transform: scale(1.03); }
+  .hero:hover .hero-img { transform: scale(1.04); }
 
   .hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(10,8,20,0.92) 0%, rgba(10,8,20,0.4) 50%, transparent 100%);
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(to top, rgba(10,6,18,0.96) 0%, rgba(10,6,18,0.5) 45%, transparent 100%);
+  }
+
+  /* diagonal texture stripe */
+  .hero-overlay::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 3px,
+      rgba(255,255,255,0.012) 3px,
+      rgba(255,255,255,0.012) 4px
+    );
   }
 
   .hero-content {
-    position: relative;
-    z-index: 2;
-    padding: 0 48px 48px;
+    position: relative; z-index: 2;
+    padding: 0 52px 52px;
     width: 100%;
   }
 
-  .hero-eyebrow {
-    font-weight: 500;
-    font-size: 12px;
-    letter-spacing: 0.22em;
+  .hero-kicker {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: #fbbf24;
-    margin-bottom: 12px;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 14px;
   }
 
   .hero-title {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(40px, 6vw, 72px);
+    font-size: clamp(44px, 7vw, 80px);
     font-weight: 900;
     color: #fff;
-    line-height: 1.05;
-    margin-bottom: 14px;
+    line-height: 0.97;
+    margin-bottom: 18px;
+    letter-spacing: -0.02em;
   }
 
   .hero-title em {
     font-style: italic;
-    background: linear-gradient(135deg, #fbbf24, #f97316);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-weight: 700;
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(255,255,255,0.6);
   }
 
-  .hero-sub {
-    font-size: 15px;
-    color: rgba(255,255,255,0.7);
-    font-weight: 300;
-    max-width: 440px;
+  .hero-chips {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    margin-top: 24px;
   }
 
-  .hero-dates {
-    display: flex;
-    gap: 12px;
-    margin-top: 22px;
-    flex-wrap: wrap;
+  .hero-chip {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 16px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 100px;
+    background: rgba(255,255,255,0.07);
+    backdrop-filter: blur(10px);
+    font-size: 13px; color: #fff; font-weight: 500;
   }
 
-  .hero-date {
-    background: rgba(255,255,255,0.10);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255,255,255,0.18);
-    border-radius: 12px;
-    padding: 10px 18px;
-    font-size: 14px;
-    color: #fff;
-    font-weight: 600;
+  .hero-chip-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #fff;
+    opacity: 0.5;
   }
 
-  .hero-date span {
-    display: block;
+  /* ─── STICKY NAV ─── */
+  .nav {
+    position: sticky; top: 0; z-index: 200;
+    background: var(--ink);
+    padding: 0 52px;
+    display: flex; align-items: stretch;
+    height: 52px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+  }
+
+  .nav-progress {
+    flex: 1;
+    display: flex; align-items: center; gap: 14px;
+  }
+
+  .nav-label {
+    font-family: 'DM Mono', monospace;
     font-size: 10px;
-    font-weight: 400;
-    opacity: 0.6;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    margin-bottom: 2px;
-  }
-
-  /* ── STICKY PROGRESS ── */
-  .progress-section {
-    background: var(--navy);
-    padding: 16px 48px;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
-  }
-
-  .progress-emoji {
-    font-size: 20px;
-    line-height: 1;
-    flex-shrink: 0;
-  }
-
-  .progress-label {
-    font-size: 12px;
-    color: rgba(255,255,255,0.5);
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
     white-space: nowrap;
   }
 
-  .progress-track {
-    flex: 1;
-    height: 8px;
-    background: rgba(255,255,255,0.12);
-    border-radius: 4px;
-    overflow: hidden;
+  .nav-track {
+    flex: 1; height: 3px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 2px;
+    overflow: visible;
+    position: relative;
   }
 
-  .progress-fill {
+  .nav-fill {
     height: 100%;
-    background: linear-gradient(90deg, #7c3aed, #0891b2, #059669);
-    border-radius: 4px;
+    background: linear-gradient(90deg, var(--c1), var(--c3), var(--c4));
+    border-radius: 2px;
     transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
     width: 0%;
-    position: relative;
   }
 
-  .progress-fill::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
-    animation: shimmer 2s infinite;
-  }
-
-  @keyframes shimmer {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
-  }
-
-  .progress-count {
+  .nav-count {
     font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    font-weight: 700;
+    font-size: 18px; font-weight: 700;
     color: #fff;
     white-space: nowrap;
   }
 
-  /* ── MAIN LAYOUT ── */
+  .nav-emoji {
+    font-size: 18px;
+    transition: all 0.3s;
+  }
+
+  /* ─── MAIN ─── */
   .main {
-    max-width: 880px;
+    max-width: 860px;
     margin: 0 auto;
-    padding: 56px 24px 100px;
+    padding: 64px 24px 120px;
   }
 
-  /* ── PHASE ── */
-  .phase {
-    margin-bottom: 56px;
-  }
+  /* ─── PHASE ─── */
+  .phase { margin-bottom: 72px; }
 
-  .phase-header {
-    display: flex;
+  .phase-head {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
-    gap: 14px;
-    margin-bottom: 20px;
-    padding: 18px 24px;
-    border-radius: 16px;
-    background: #fff;
-    box-shadow: var(--shadow-sm);
-    position: relative;
-    overflow: hidden;
+    gap: 0;
+    margin-bottom: 24px;
   }
 
-  .phase-header::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 5px;
-    border-radius: 16px 0 0 16px;
-  }
-
-  .phase-1 .phase-header::before { background: var(--phase-1); }
-  .phase-2 .phase-header::before { background: var(--phase-2); }
-  .phase-3 .phase-header::before { background: var(--phase-3); }
-  .phase-4 .phase-header::before { background: var(--phase-4); }
-  .phase-5 .phase-header::before { background: var(--phase-5); }
-
-  .phase-icon {
-    font-size: 30px;
+  .phase-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 72px;
+    font-weight: 900;
     line-height: 1;
-    flex-shrink: 0;
+    color: var(--rule);
+    margin-right: 18px;
+    letter-spacing: -0.04em;
+    user-select: none;
+    transition: color 0.3s;
   }
 
-  .phase-meta { flex: 1; }
+  .phase:hover .phase-num { color: rgba(24,21,32,0.12); }
+
+  .phase-info {}
 
   .phase-title {
     font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--navy);
-    line-height: 1.2;
+    font-size: 22px; font-weight: 700;
+    color: var(--ink);
+    line-height: 1.15;
   }
 
-  .phase-badge {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.06em;
+  .phase-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--text-muted);
-    margin-top: 2px;
+    color: var(--ink-faint);
+    margin-top: 3px;
   }
 
-  .phase-progress-mini {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-muted);
-    background: var(--cream);
-    padding: 4px 12px;
-    border-radius: 20px;
+  .phase-tally {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-faint);
+    text-align: right;
     white-space: nowrap;
+    padding-left: 16px;
   }
 
-  .phase-1 .phase-progress-mini { color: var(--phase-1); background: rgba(124,58,237,0.08); }
-  .phase-2 .phase-progress-mini { color: var(--phase-2); background: rgba(220,38,38,0.08); }
-  .phase-3 .phase-progress-mini { color: var(--phase-3); background: rgba(8,145,178,0.08); }
-  .phase-4 .phase-progress-mini { color: var(--phase-4); background: rgba(5,150,105,0.08); }
-  .phase-5 .phase-progress-mini { color: var(--phase-5); background: rgba(217,119,6,0.08); }
-
-  .phase-done .phase-title { opacity: 0.5; }
-  .phase-done .phase-icon { filter: grayscale(0.5) opacity(0.6); }
-
-  /* ── TASKS ── */
-  .task-list { display: flex; flex-direction: column; gap: 6px; }
-
-  .task {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    padding: 14px 18px;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.15s ease;
-    border: 1.5px solid transparent;
-    background: var(--warm-white);
-    box-shadow: var(--shadow-sm);
+  .phase-tally strong {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--ink-mid);
+    display: block;
+    line-height: 1;
   }
 
-  .task:hover {
-    border-color: var(--border);
-    box-shadow: var(--shadow);
-    transform: translateY(-2px);
-  }
-
-  .task.checked {
-    background: rgba(26,46,74,0.04);
-    box-shadow: none;
-    border-color: rgba(26,46,74,0.08);
-  }
-
-  .task.checked:hover {
-    background: rgba(26,46,74,0.06);
-    transform: translateY(0);
-  }
-
-  .checkbox {
-    width: 24px;
-    height: 24px;
-    border-radius: 7px;
-    border: 2px solid var(--border);
-    background: #fff;
-    flex-shrink: 0;
-    margin-top: 1px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
+  /* colored rule under phase head */
+  .phase-rule {
+    height: 2px;
+    border-radius: 1px;
+    margin-bottom: 16px;
+    background: var(--rule);
     position: relative;
     overflow: hidden;
   }
 
-  .task.checked .checkbox {
-    background: var(--navy);
-    border-color: var(--navy);
-  }
-
-  .checkbox::after {
+  .phase-rule::after {
     content: '';
-    width: 12px;
-    height: 7px;
-    border-left: 2.5px solid #fff;
-    border-bottom: 2.5px solid #fff;
-    transform: rotate(-45deg) translateY(-2px) scale(0);
-    transition: transform 0.2s cubic-bezier(0.4,0,0.2,1);
+    position: absolute; inset: 0;
+    border-radius: 1px;
+    background: var(--phase-color, var(--rule));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
   }
 
-  .task.checked .checkbox::after { transform: rotate(-45deg) translateY(-2px) scale(1); }
+  .phase-rule.active::after { transform: scaleX(1); }
 
-  .task-body { flex: 1; min-width: 0; }
+  /* ─── TASKS ─── */
+  .task-list { display: flex; flex-direction: column; gap: 3px; }
+
+  .task {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 14px;
+    padding: 13px 16px 13px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.12s, box-shadow 0.12s, transform 0.12s;
+    background: var(--white);
+    border-left: 3px solid transparent;
+    position: relative;
+  }
+
+  /* importance → left border color */
+  .task[data-imp="critical"] { border-left-color: var(--imp-must); }
+  .task[data-imp="high"]     { border-left-color: var(--imp-high); }
+  .task[data-imp="medium"]   { border-left-color: var(--imp-medium); }
+  .task[data-imp="low"]      { border-left-color: var(--ink-faint); }
+
+  .task:hover {
+    background: #fff;
+    box-shadow: 0 4px 20px rgba(24,21,32,0.10);
+    transform: translateX(3px);
+  }
+
+  .task.checked {
+    background: rgba(24,21,32,0.03);
+    border-left-color: var(--rule) !important;
+  }
+
+  .task.checked:hover {
+    box-shadow: none;
+    transform: none;
+  }
+
+  /* checkbox */
+  .cb {
+    width: 20px; height: 20px;
+    border-radius: 5px;
+    border: 1.5px solid var(--rule);
+    background: #fff;
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.18s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .task.checked .cb {
+    background: var(--ink);
+    border-color: var(--ink);
+  }
+
+  .cb::after {
+    content: '';
+    width: 10px; height: 6px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(-45deg) translate(0, -1px) scale(0);
+    transition: transform 0.18s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .task.checked .cb::after { transform: rotate(-45deg) translate(0,-1px) scale(1); }
+
+  /* body */
+  .task-body { min-width: 0; }
 
   .task-text {
-    font-size: 14.5px;
-    font-weight: 500;
-    color: var(--text);
-    line-height: 1.4;
-    transition: color 0.2s;
+    font-size: 14px; font-weight: 500;
+    color: var(--ink);
+    line-height: 1.45;
+    transition: color 0.15s;
   }
 
   .task.checked .task-text {
     text-decoration: line-through;
-    color: var(--text-muted);
+    color: var(--ink-faint);
     font-weight: 400;
   }
 
-  .task-sub {
+  .task-note {
     font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 4px;
-    line-height: 1.5;
+    color: var(--ink-faint);
+    margin-top: 3px;
+    line-height: 1.45;
     font-weight: 400;
   }
 
-  .task.checked .task-sub { opacity: 0.5; }
+  .task.checked .task-note { opacity: 0.5; }
 
-  /* ── TASK INDICATORS ── */
-  .task-indicators {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    margin-top: 8px;
-    align-items: center;
+  /* subtle meta row */
+  .task-meta {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 7px;
+    opacity: 0;
+    transition: opacity 0.15s;
   }
 
-  .task.checked .task-indicators { opacity: 0.4; }
+  .task:hover .task-meta,
+  .task.checked .task-meta { opacity: 1; }
 
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    font-size: 10.5px;
-    font-weight: 600;
-    padding: 3px 8px;
-    border-radius: 6px;
-    letter-spacing: 0.03em;
-    white-space: nowrap;
+  .meta-time {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; color: var(--ink-faint);
+    letter-spacing: 0.04em;
+    display: flex; align-items: center; gap: 4px;
   }
 
-  .badge-critical {
-    background: rgba(220,38,38,0.10);
-    color: var(--imp-critical);
-    border: 1px solid rgba(220,38,38,0.20);
+  .meta-time svg { opacity: 0.5; }
+
+  .meta-cost {
+    display: flex; align-items: center; gap: 2px;
   }
 
-  .badge-high {
-    background: rgba(234,88,12,0.10);
-    color: var(--imp-high);
-    border: 1px solid rgba(234,88,12,0.20);
+  .cost-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
   }
 
-  .badge-medium {
-    background: rgba(37,99,235,0.10);
-    color: var(--imp-medium);
-    border: 1px solid rgba(37,99,235,0.18);
+  .cost-dot.filled { background: var(--ink-mid); }
+  .cost-dot.empty  { background: var(--rule); border: 1px solid var(--ink-faint); opacity: 0.4; }
+
+  .meta-sep {
+    width: 1px; height: 10px;
+    background: var(--rule);
   }
 
-  .badge-low {
-    background: rgba(156,163,175,0.12);
-    color: var(--imp-low);
-    border: 1px solid rgba(156,163,175,0.25);
-  }
-
-  .badge-time {
-    background: rgba(124,58,237,0.08);
-    color: #7c3aed;
-    border: 1px solid rgba(124,58,237,0.15);
-  }
-
-  .badge-cost-free {
-    background: rgba(5,150,105,0.08);
-    color: #059669;
-    border: 1px solid rgba(5,150,105,0.15);
-  }
-
-  .badge-cost-low {
-    background: rgba(217,119,6,0.08);
-    color: #b45309;
-    border: 1px solid rgba(217,119,6,0.15);
-  }
-
-  .badge-cost-med {
-    background: rgba(234,88,12,0.08);
-    color: #c2410c;
-    border: 1px solid rgba(234,88,12,0.15);
-  }
-
-  .badge-cost-high {
-    background: rgba(220,38,38,0.08);
-    color: #b91c1c;
-    border: 1px solid rgba(220,38,38,0.15);
-  }
-
-  .badge-cost-varies {
-    background: rgba(107,114,128,0.08);
-    color: #6b7280;
-    border: 1px solid rgba(107,114,128,0.15);
-  }
-
-  .urgent-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    background: rgba(220,38,38,0.12);
-    color: #dc2626;
-    padding: 2px 7px;
-    border-radius: 6px;
+  /* urgent pip */
+  .urgent-pip {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--imp-must);
     margin-left: 6px;
     vertical-align: middle;
-    border: 1px solid rgba(220,38,38,0.22);
+    animation: pulse 1.8s ease-in-out infinite;
+    flex-shrink: 0;
   }
 
-  /* ── CONFETTI ── */
-  @keyframes pop {
-    0% { transform: scale(0) rotate(0deg); opacity: 1; }
-    80% { opacity: 1; }
-    100% { transform: scale(1.2) rotate(720deg) translateY(-80px); opacity: 0; }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(220,38,38,0.5); }
+    50%       { box-shadow: 0 0 0 4px rgba(220,38,38,0); }
   }
 
-  .confetti-piece {
+  /* ─── CONFETTI ─── */
+  @keyframes fly {
+    0%   { transform: scale(0) rotate(0deg)   translateY(0);   opacity: 1; }
+    100% { transform: scale(1) rotate(600deg) translateY(-90px); opacity: 0; }
+  }
+
+  .cp {
     position: fixed;
-    width: 9px;
-    height: 9px;
-    border-radius: 3px;
+    width: 8px; height: 8px;
+    border-radius: 2px;
     pointer-events: none;
-    animation: pop 0.75s cubic-bezier(0.4,0,0.2,1) forwards;
     z-index: 9999;
+    animation: fly 0.8s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
   }
 
-  /* ── DONE BANNER ── */
+  /* ─── DONE BANNER ─── */
   .done-banner {
     text-align: center;
-    padding: 56px 24px;
-    margin-top: 40px;
-    background: linear-gradient(135deg, rgba(124,58,237,0.06), rgba(8,145,178,0.06), rgba(5,150,105,0.06));
+    padding: 64px 32px;
+    margin-top: 48px;
     border-radius: 20px;
-    border: 2px dashed rgba(124,58,237,0.25);
+    background: var(--white);
+    border: 1px solid var(--rule);
     display: none;
+    position: relative;
+    overflow: hidden;
   }
 
-  .done-banner.visible { display: block; animation: fadeIn 0.5s ease; }
+  .done-banner::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg,
+      rgba(109,40,217,0.04) 0%,
+      rgba(4,120,87,0.04) 50%,
+      rgba(180,83,9,0.04) 100%);
+  }
 
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  .done-banner.visible { display: block; animation: fadeUp 0.5s ease; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
   .done-banner h2 {
+    position: relative;
     font-family: 'Playfair Display', serif;
-    font-size: 36px;
-    font-weight: 900;
-    color: var(--navy);
+    font-size: 40px; font-weight: 900;
+    color: var(--ink);
     margin-bottom: 10px;
   }
 
-  .done-banner p { color: var(--text-muted); font-size: 15px; }
-
-  /* ── LEGEND ── */
-  .legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 40px;
-    padding: 18px 20px;
-    background: #fff;
-    border-radius: 14px;
-    box-shadow: var(--shadow-sm);
-    align-items: center;
+  .done-banner p {
+    position: relative;
+    color: var(--ink-faint); font-size: 15px;
   }
 
-  .legend-label {
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--text-muted);
-    margin-right: 4px;
-  }
-
-  .legend-divider {
-    width: 1px;
-    height: 20px;
-    background: var(--border);
-    margin: 0 6px;
-  }
-
-  /* ── FOOTER ── */
+  /* ─── FOOTER ─── */
   footer {
     text-align: center;
-    padding: 28px;
-    font-size: 12px;
-    color: var(--text-muted);
-    border-top: 1px solid var(--border);
+    padding: 32px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    border-top: 1px solid var(--rule);
   }
 
+  /* ─── RESPONSIVE ─── */
   @media (max-width: 600px) {
-    .hero { height: 400px; }
-    .hero-content { padding: 0 24px 32px; }
-    .progress-section { padding: 14px 20px; gap: 10px; }
-    .progress-emoji { display: none; }
-    .main { padding: 32px 16px 60px; }
-    .phase-header { padding: 14px 18px; }
-    .phase-title { font-size: 17px; }
+    .hero { height: 460px; }
+    .hero-content { padding: 0 24px 36px; }
+    .nav { padding: 0 20px; }
+    .main { padding: 40px 16px 80px; }
+    .phase-num { font-size: 48px; }
+    .phase-title { font-size: 18px; }
   }
 </style>
 </head>
 <body>
 
+<!-- HERO -->
 <div class="hero">
-  <img class="hero-img" src="https://photos.zillowstatic.com/fp/d7f56492e936a86a994e654a94d4a60a-cc_ft_1152.webp" alt="Our new home" onerror="this.style.display='none'">
+  <img class="hero-img" src="https://photos.zillowstatic.com/fp/d7f56492e936a86a994e654a94d4a60a-cc_ft_1152.webp" alt="New home" onerror="this.style.display='none'">
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-eyebrow">📦 The Seven-Day Void</div>
-    <div class="hero-title">Boxes, Chaos &amp;<br><em>a New Address</em></div>
-    <div class="hero-sub">Check things off as you go — we're in this together.</div>
-    <div class="hero-dates">
-      <div class="hero-date"><span>We're out</span>June 15</div>
-      <div class="hero-date"><span>We're in</span>June 22</div>
-      <div class="hero-date"><span>The gap</span>7 days 😅</div>
+    <div class="hero-kicker">June 2025 · The Big Move</div>
+    <div class="hero-title">
+      Boxes,<br>Chaos &amp;<br><em>a New Address</em>
+    </div>
+    <div class="hero-chips">
+      <div class="hero-chip"><div class="hero-chip-dot" style="background:#f97316"></div>Out Jun 15</div>
+      <div class="hero-chip"><div class="hero-chip-dot" style="background:#22c55e"></div>In Jun 22</div>
+      <div class="hero-chip"><div class="hero-chip-dot" style="background:#a78bfa"></div>7-day gap 😅</div>
     </div>
   </div>
 </div>
 
-<div class="progress-section">
-  <div class="progress-emoji">📦</div>
-  <div class="progress-label">Progress</div>
-  <div class="progress-track">
-    <div class="progress-fill" id="progress-fill"></div>
+<!-- STICKY NAV -->
+<div class="nav">
+  <div class="nav-progress">
+    <span class="nav-emoji" id="nav-emoji">📦</span>
+    <span class="nav-label">Done</span>
+    <div class="nav-track"><div class="nav-fill" id="nav-fill"></div></div>
+    <div class="nav-count" id="nav-count">0 / 0</div>
   </div>
-  <div class="progress-count" id="progress-count">0 / 0</div>
 </div>
 
+<!-- MAIN -->
 <div class="main">
-
-  <div class="legend">
-    <span class="legend-label">Importance →</span>
-    <span class="badge badge-critical">🚨 Must Do</span>
-    <span class="badge badge-high">⚡ High</span>
-    <span class="badge badge-medium">📌 Medium</span>
-    <span class="badge badge-low">💭 Low</span>
-    <div class="legend-divider"></div>
-    <span class="legend-label">Cost →</span>
-    <span class="badge badge-cost-free">✓ Free</span>
-    <span class="badge badge-cost-low">$ Low</span>
-    <span class="badge badge-cost-med">$$ Moderate</span>
-    <span class="badge badge-cost-high">$$$ Significant</span>
-    <div class="legend-divider"></div>
-    <span class="legend-label">Time →</span>
-    <span class="badge badge-time">⏱ estimate</span>
-  </div>
-
   <div id="checklist"></div>
-
   <div class="done-banner" id="done-banner">
-    <div style="font-size:64px;margin-bottom:16px">🏡</div>
-    <h2>You're officially home!</h2>
+    <div style="font-size:72px;margin-bottom:16px;position:relative">🏡</div>
+    <h2>You're officially home.</h2>
     <p>Every single box checked. Time to crack open something nice.</p>
   </div>
 </div>
 
-<footer>Made with love for the move · June 2025</footer>
+<footer>Made with love · June 2025</footer>
 
 <script>
+// ── DATA ──
+// importance: critical | high | medium | low
+// cost: 0=free, 1=$, 2=$$, 3=$$$
 const phases = [
   {
-    icon: "📋",
-    label: "Now → June 14",
-    badge: "Pre-move",
-    colorClass: "phase-1",
+    icon: "01", label: "Now → June 14", sub: "Pre-move", color: "var(--c1)",
     tasks: [
-      { text: "Confirm possession dates in writing with both agents/lawyers", sub: "Sell closes 6/15, buy closes 6/22", importance: "high", time: "30m", cost: "free" },
-      { text: "Order PODS container — schedule delivery to current house", sub: "Book now; they need several days' lead time", urgent: true, importance: "critical", time: "30m", cost: "$$$" },
-      { text: "Confirm PODS pickup date from sold house (after 6/15 closing)", sub: "POD serves as your storage during the 6/15–6/22 gap", importance: "critical", time: "15m", cost: "free" },
-      { text: "Schedule PODS delivery to new house for 6/22 or 6/23", sub: "Confirm this aligns with your closing time", urgent: true, importance: "critical", time: "15m", cost: "free" },
-      { text: "Check if city or HOA requires a street permit for the POD", sub: "May need a few days to process", importance: "high", time: "1h", cost: "$" },
-      { text: "Confirm flat, accessible drop spot for POD at current house", sub: "Driveway preferred; street requires permit", importance: "medium", time: "15m", cost: "free" },
-      { text: "Arrange temporary housing for 6/15–6/21", sub: "Hotel, family, Airbnb — book now", urgent: true, importance: "critical", time: "1h", cost: "$$$" },
-      { text: "Confirm utilities shutoff at sold house for 6/15", importance: "high", time: "30m", cost: "free" },
-      { text: "Set up utilities at new house starting 6/22", sub: "Electric, gas, water, internet", urgent: true, importance: "critical", time: "1h", cost: "$" },
-      { text: "Forward mail via USPS (submit change of address form)", sub: "usps.com — takes a few days to activate", importance: "high", time: "15m", cost: "free" },
-      { text: "Notify employer HR of new address (for tax/payroll)", importance: "medium", time: "15m", cost: "free" },
-      { text: "Update address with bank and credit card companies", importance: "high", time: "1h", cost: "free" },
-      { text: "Update address with insurance providers", sub: "Home, auto, health, life", importance: "high", time: "1h", cost: "free" },
-      { text: "Notify subscriptions and online accounts of new address", sub: "Amazon, Apple ID, Google, etc.", importance: "medium", time: "1h", cost: "free" },
-      { text: "Transfer or cancel local services", sub: "Lawn care, cleaning service, trash pickup, alarm monitoring", importance: "medium", time: "1h", cost: "free" },
-      { text: "Sort and declutter — donate, sell, or toss before packing", sub: "Saves time and money on the move", importance: "high", time: "2–3 days", cost: "free" },
-      { text: "Buy packing supplies", sub: "Boxes, tape, bubble wrap, furniture pads, markers, labels", importance: "high", time: "1h", cost: "$$" },
-      { text: "Pack the POD strategically as you load", sub: "Heaviest items on the floor against the front wall; furniture pads on everything", importance: "high", time: "full day", cost: "free" },
-      { text: "Pack non-essentials and label all boxes by room", importance: "high", time: "several days", cost: "free" },
-      { text: "Pack an essentials bag/box (last in, first out)", sub: "Toiletries, meds, chargers, documents, a few days of clothes — keep this out of the POD", importance: "critical", time: "1h", cost: "free" },
-      { text: "Lock the POD after each packing session", importance: "high", time: "5m", cost: "free" },
-      { text: "Photograph all valuables for insurance records", importance: "high", time: "1h", cost: "free" },
-      { text: "Gather important documents", sub: "IDs, closing docs, insurance cards, passports, medical records", importance: "critical", time: "30m", cost: "free" },
-      { text: "Clean out and defrost fridge/freezer before move day", importance: "high", time: "2h", cost: "free" },
-      { text: "Disassemble large furniture that won't fit assembled", importance: "medium", time: "2–3h", cost: "free" },
-      { text: "Return any borrowed items; collect items you've lent out", importance: "low", time: "varies", cost: "free" },
-      { text: "Do a final walkthrough of sold house", sub: "Check attic, garage, under decks, in-ground storage", importance: "high", time: "1h", cost: "free" },
+      { text: "Confirm possession dates in writing with both agents/lawyers", note: "Sell closes 6/15, buy closes 6/22", imp: "high",     time: "30m",          cost: 0 },
+      { text: "Order PODS container — schedule delivery to current house",    note: "Book now; they need several days' lead time",        imp: "critical",  time: "30m",          cost: 3, urgent: true },
+      { text: "Confirm PODS pickup date from sold house (after 6/15 closing)",note: "POD serves as your storage during the gap",           imp: "critical",  time: "15m",          cost: 0 },
+      { text: "Schedule PODS delivery to new house for 6/22 or 6/23",        note: "Confirm this aligns with your closing time",          imp: "critical",  time: "15m",          cost: 0, urgent: true },
+      { text: "Check if city or HOA requires a street permit for the POD",   note: "May need a few days to process",                    imp: "high",      time: "1h",           cost: 1 },
+      { text: "Confirm flat, accessible drop spot for POD at current house", note: "Driveway preferred; street requires permit",          imp: "medium",    time: "15m",          cost: 0 },
+      { text: "Arrange temporary housing for 6/15–6/21",                     note: "Hotel, family, Airbnb — book now",                   imp: "critical",  time: "1h",           cost: 3, urgent: true },
+      { text: "Confirm utilities shutoff at sold house for 6/15",            note: "",                                                   imp: "high",      time: "30m",          cost: 0 },
+      { text: "Set up utilities at new house starting 6/22",                 note: "Electric, gas, water, internet",                    imp: "critical",  time: "1h",           cost: 1, urgent: true },
+      { text: "Forward mail via USPS (submit change of address form)",       note: "usps.com — takes a few days to activate",            imp: "high",      time: "15m",          cost: 0 },
+      { text: "Notify employer HR of new address (for tax/payroll)",         note: "",                                                   imp: "medium",    time: "15m",          cost: 0 },
+      { text: "Update address with bank and credit card companies",          note: "",                                                   imp: "high",      time: "1h",           cost: 0 },
+      { text: "Update address with insurance providers",                     note: "Home, auto, health, life",                          imp: "high",      time: "1h",           cost: 0 },
+      { text: "Notify subscriptions and online accounts of new address",     note: "Amazon, Apple ID, Google, etc.",                    imp: "medium",    time: "1h",           cost: 0 },
+      { text: "Transfer or cancel local services",                           note: "Lawn care, cleaning, trash, alarm monitoring",       imp: "medium",    time: "1h",           cost: 0 },
+      { text: "Sort and declutter — donate, sell, or toss before packing",   note: "Saves time and money on the move",                  imp: "high",      time: "2–3 days",     cost: 0 },
+      { text: "Buy packing supplies",                                        note: "Boxes, tape, bubble wrap, furniture pads, markers",  imp: "high",      time: "1h",           cost: 2 },
+      { text: "Pack the POD strategically as you load",                      note: "Heaviest items on floor against front wall",         imp: "high",      time: "full day",     cost: 0 },
+      { text: "Pack non-essentials and label all boxes by room",             note: "",                                                   imp: "high",      time: "several days", cost: 0 },
+      { text: "Pack an essentials bag/box — keep it out of the POD",        note: "Toiletries, meds, chargers, docs, a few days of clothes", imp: "critical", time: "1h",      cost: 0 },
+      { text: "Lock the POD after each packing session",                     note: "",                                                   imp: "high",      time: "5m",           cost: 0 },
+      { text: "Photograph all valuables for insurance records",              note: "",                                                   imp: "high",      time: "1h",           cost: 0 },
+      { text: "Gather important documents",                                  note: "IDs, closing docs, insurance, passports, medical",   imp: "critical",  time: "30m",          cost: 0 },
+      { text: "Clean out and defrost fridge/freezer before move day",        note: "",                                                   imp: "high",      time: "2h",           cost: 0 },
+      { text: "Disassemble large furniture that won't fit assembled",        note: "",                                                   imp: "medium",    time: "2–3h",         cost: 0 },
+      { text: "Return borrowed items; collect items you've lent out",        note: "",                                                   imp: "low",       time: "varies",       cost: 0 },
+      { text: "Do a final walkthrough of sold house",                        note: "Check attic, garage, under decks, storage",          imp: "high",      time: "1h",           cost: 0 },
     ]
   },
   {
-    icon: "🔑",
-    label: "June 15 — Move out",
-    badge: "Move-out day",
-    colorClass: "phase-2",
+    icon: "02", label: "June 15 — Move out", sub: "Move-out day", color: "var(--c2)",
     tasks: [
-      { text: "Finish loading POD and lock it", urgent: true, importance: "critical", time: "half day", cost: "free" },
-      { text: "Do room-by-room sweep before handing over keys", sub: "Closets, cabinets, garage, shed, basement", importance: "critical", time: "1h", cost: "free" },
-      { text: "Leave house in the condition required by the contract", importance: "critical", time: "2–3h", cost: "$" },
-      { text: "Hand over all keys, fobs, garage remotes, and mailbox keys", importance: "critical", time: "15m", cost: "free" },
-      { text: "Confirm closing documents are signed and funds disbursed", sub: "Coordinate with your real estate lawyer/agent", importance: "critical", time: "30m", cost: "free" },
-      { text: "Take photos of the house condition as you leave", importance: "high", time: "30m", cost: "free" },
-      { text: "Confirm PODS pickup is scheduled from this address", importance: "high", time: "15m", cost: "free" },
+      { text: "Finish loading POD and lock it",                              note: "",                                                   imp: "critical",  time: "half day",     cost: 0, urgent: true },
+      { text: "Do room-by-room sweep before handing over keys",              note: "Closets, cabinets, garage, shed, basement",          imp: "critical",  time: "1h",           cost: 0 },
+      { text: "Leave house in the condition required by the contract",       note: "",                                                   imp: "critical",  time: "2–3h",         cost: 1 },
+      { text: "Hand over all keys, fobs, garage remotes, mailbox keys",     note: "",                                                   imp: "critical",  time: "15m",          cost: 0 },
+      { text: "Confirm closing documents are signed and funds disbursed",    note: "Coordinate with your real estate lawyer/agent",      imp: "critical",  time: "30m",          cost: 0 },
+      { text: "Take photos of the house condition as you leave",             note: "",                                                   imp: "high",      time: "30m",          cost: 0 },
+      { text: "Confirm PODS pickup is scheduled from this address",          note: "",                                                   imp: "high",      time: "15m",          cost: 0 },
     ]
   },
   {
-    icon: "🏕️",
-    label: "June 15–21 — The gap",
-    badge: "Temporarily homeless 😅",
-    colorClass: "phase-3",
+    icon: "03", label: "June 15–21 — The gap", sub: "Temporarily homeless 😅", color: "var(--c3)",
     tasks: [
-      { text: "Stay in pre-arranged temporary housing", importance: "critical", time: "7 days", cost: "$$$" },
-      { text: "Confirm 6/22 closing is on track with agent/lawyer", sub: "Watch for any delays or conditions", importance: "critical", time: "30m", cost: "free" },
-      { text: "Confirm PODS delivery window to new house for 6/22 or 6/23", importance: "critical", time: "15m", cost: "free" },
-      { text: "Confirm utility activation at new house for 6/22", importance: "critical", time: "15m", cost: "free" },
-      { text: "Plan first-night essentials", sub: "Know where your essentials bag is — it should be with you, not in the POD", importance: "high", time: "15m", cost: "free" },
+      { text: "Stay in pre-arranged temporary housing",                      note: "",                                                   imp: "critical",  time: "7 days",       cost: 3 },
+      { text: "Confirm 6/22 closing is on track with agent/lawyer",         note: "Watch for any delays or conditions",                 imp: "critical",  time: "30m",          cost: 0 },
+      { text: "Confirm PODS delivery window to new house for 6/22 or 6/23", note: "",                                                   imp: "critical",  time: "15m",          cost: 0 },
+      { text: "Confirm utility activation at new house for 6/22",           note: "",                                                   imp: "critical",  time: "15m",          cost: 0 },
+      { text: "Plan first-night essentials",                                 note: "Essentials bag should be with you, not in the POD",  imp: "high",      time: "15m",          cost: 0 },
     ]
   },
   {
-    icon: "🏡",
-    label: "June 22 — Move in!",
-    badge: "The big day",
-    colorClass: "phase-4",
+    icon: "04", label: "June 22 — Move in!", sub: "The big day", color: "var(--c4)",
     tasks: [
-      { text: "Complete closing paperwork and receive keys", urgent: true, importance: "critical", time: "2h", cost: "varies" },
-      { text: "Do a pre-move-in walkthrough to check condition of home", importance: "high", time: "1h", cost: "free" },
-      { text: "Photograph any existing damage before unloading", sub: "Protects you from disputes later", importance: "high", time: "30m", cost: "free" },
-      { text: "Confirm flat, accessible drop spot for POD at new house", sub: "Driveway preferred; check HOA rules", importance: "medium", time: "15m", cost: "free" },
-      { text: "Unload POD into correct rooms using box labels", importance: "critical", time: "full day", cost: "free" },
-      { text: "Check that utilities are live: electric, gas, water, internet", importance: "critical", time: "30m", cost: "free" },
-      { text: "Locate main water shutoff, electrical panel, and gas shutoff", importance: "high", time: "30m", cost: "free" },
-      { text: "Change or rekey all locks", sub: "You don't know who has copies of the old keys", urgent: true, importance: "critical", time: "2h", cost: "$$" },
-      { text: "Test smoke detectors and carbon monoxide detectors", importance: "high", time: "30m", cost: "$" },
-      { text: "Set up essentials first: beds, bathroom, kitchen basics", importance: "high", time: "2h", cost: "free" },
-      { text: "Schedule PODS pickup once fully unloaded", sub: "Don't pay for extra days you don't need", importance: "medium", time: "15m", cost: "free" },
+      { text: "Complete closing paperwork and receive keys",                 note: "",                                                   imp: "critical",  time: "2h",           cost: 0, urgent: true },
+      { text: "Do a pre-move-in walkthrough to check condition of home",     note: "",                                                   imp: "high",      time: "1h",           cost: 0 },
+      { text: "Photograph any existing damage before unloading",            note: "Protects you from disputes later",                   imp: "high",      time: "30m",          cost: 0 },
+      { text: "Confirm flat, accessible drop spot for POD at new house",     note: "Driveway preferred; check HOA rules",               imp: "medium",    time: "15m",          cost: 0 },
+      { text: "Unload POD into correct rooms using box labels",              note: "",                                                   imp: "critical",  time: "full day",     cost: 0 },
+      { text: "Check that utilities are live: electric, gas, water, internet", note: "",                                                imp: "critical",  time: "30m",          cost: 0 },
+      { text: "Locate main water shutoff, electrical panel, and gas shutoff", note: "",                                                 imp: "high",      time: "30m",          cost: 0 },
+      { text: "Change or rekey all locks",                                   note: "You don't know who has copies of the old keys",      imp: "critical",  time: "2h",           cost: 2, urgent: true },
+      { text: "Test smoke detectors and carbon monoxide detectors",          note: "",                                                   imp: "high",      time: "30m",          cost: 1 },
+      { text: "Set up essentials first: beds, bathroom, kitchen basics",    note: "",                                                   imp: "high",      time: "2h",           cost: 0 },
+      { text: "Schedule PODS pickup once fully unloaded",                    note: "Don't pay for extra days you don't need",            imp: "medium",    time: "15m",          cost: 0 },
     ]
   },
   {
-    icon: "✅",
-    label: "June 23 onward — Settle in",
-    badge: "Post-move",
-    colorClass: "phase-5",
+    icon: "05", label: "June 23 onward — Settle in", sub: "Post-move", color: "var(--c5)",
     tasks: [
-      { text: "Update driver's license with new address", sub: "Usually required within 30–60 days by state law", importance: "high", time: "2h", cost: "$" },
-      { text: "Update vehicle registration with new address", importance: "high", time: "1h", cost: "$" },
-      { text: "Register to vote at new address (if different county/state)", importance: "medium", time: "15m", cost: "free" },
-      { text: "Notify your kids' schools (or update enrollment if needed)", importance: "high", time: "30m", cost: "free" },
-      { text: "Transfer medical providers or notify of new address", importance: "medium", time: "1h", cost: "free" },
-      { text: "Update address with Social Security if applicable", importance: "medium", time: "30m", cost: "free" },
-      { text: "Find nearest hospital, urgent care, and pharmacy", importance: "high", time: "15m", cost: "free" },
-      { text: "Get to know HOA rules if applicable", sub: "Trash pickup days, parking, mailbox rules", importance: "medium", time: "30m", cost: "free" },
-      { text: "Schedule any inspections or repairs identified at closing", importance: "high", time: "1h", cost: "varies" },
-      { text: "Unpack systematically — kitchen and bedrooms first", importance: "high", time: "several days", cost: "free" },
-      { text: "Break down boxes and dispose of packing materials", importance: "low", time: "1h", cost: "free" },
+      { text: "Update driver's license with new address",                   note: "Usually required within 30–60 days by state law",    imp: "high",      time: "2h",           cost: 1 },
+      { text: "Update vehicle registration with new address",               note: "",                                                   imp: "high",      time: "1h",           cost: 1 },
+      { text: "Register to vote at new address (if different county/state)", note: "",                                                   imp: "medium",    time: "15m",          cost: 0 },
+      { text: "Notify your kids' schools (or update enrollment if needed)", note: "",                                                   imp: "high",      time: "30m",          cost: 0 },
+      { text: "Transfer medical providers or notify of new address",        note: "",                                                   imp: "medium",    time: "1h",           cost: 0 },
+      { text: "Update address with Social Security if applicable",          note: "",                                                   imp: "medium",    time: "30m",          cost: 0 },
+      { text: "Find nearest hospital, urgent care, and pharmacy",           note: "",                                                   imp: "high",      time: "15m",          cost: 0 },
+      { text: "Get to know HOA rules if applicable",                        note: "Trash days, parking, mailbox rules",                 imp: "medium",    time: "30m",          cost: 0 },
+      { text: "Schedule any inspections or repairs identified at closing",  note: "",                                                   imp: "high",      time: "1h",           cost: 0 },
+      { text: "Unpack systematically — kitchen and bedrooms first",         note: "",                                                   imp: "high",      time: "several days", cost: 0 },
+      { text: "Break down boxes and dispose of packing materials",          note: "",                                                   imp: "low",       time: "1h",           cost: 0 },
     ]
   }
 ];
 
-const IMPORTANCE_CONFIG = {
-  critical: { label: "🚨 Must Do",  cls: "badge-critical" },
-  high:     { label: "⚡ High",      cls: "badge-high" },
-  medium:   { label: "📌 Medium",   cls: "badge-medium" },
-  low:      { label: "💭 Low",      cls: "badge-low" },
-};
-
-function costBadge(cost) {
-  if (cost === "free")   return `<span class="badge badge-cost-free">✓ Free</span>`;
-  if (cost === "$")      return `<span class="badge badge-cost-low">💰 $</span>`;
-  if (cost === "$$")     return `<span class="badge badge-cost-med">💰 $$</span>`;
-  if (cost === "$$$")    return `<span class="badge badge-cost-high">💰 $$$</span>`;
-  if (cost === "varies") return `<span class="badge badge-cost-varies">💰 varies</span>`;
-  return '';
+// ── COST DOTS ──
+function costDots(n) {
+  const max = 3;
+  let html = '<div class="meta-cost" title="' + ['Free','$','$$','$$$'][n] + '">';
+  for (let i = 0; i < max; i++) {
+    html += `<div class="cost-dot ${i < n ? 'filled' : 'empty'}"></div>`;
+  }
+  return html + '</div>';
 }
 
-// ── State ──
-const STORAGE_KEY = 'moving-checklist-2025';
-let state = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+// ── STATE ──
+const KEY = 'moving-2025-v2';
+let state = JSON.parse(localStorage.getItem(KEY) || '{}');
+function save() { localStorage.setItem(KEY, JSON.stringify(state)); }
 
-function saveState() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
-
-// ── Confetti ──
+// ── CONFETTI ──
 function burst(x, y) {
-  const colors = ['#7c3aed','#0891b2','#059669','#d97706','#dc2626','#fbbf24','#f97316'];
-  for (let i = 0; i < 14; i++) {
+  const palette = ['#6d28d9','#be123c','#0369a1','#047857','#b45309','#f59e0b','#f97316','#e11d48'];
+  for (let i = 0; i < 16; i++) {
     const el = document.createElement('div');
-    el.className = 'confetti-piece';
-    const angle = (Math.random() * 360) * Math.PI / 180;
-    const dist = 30 + Math.random() * 50;
-    el.style.cssText = `left:${x + Math.cos(angle)*dist}px;top:${y + Math.sin(angle)*dist}px;background:${colors[Math.random()*colors.length|0]};transform-origin:center;animation-delay:${Math.random()*0.18}s`;
+    el.className = 'cp';
+    const a = Math.random() * Math.PI * 2;
+    const r = 20 + Math.random() * 60;
+    el.style.cssText = `left:${x+Math.cos(a)*r}px;top:${y+Math.sin(a)*r}px;background:${palette[Math.random()*palette.length|0]};animation-delay:${Math.random()*0.1}s`;
     document.body.appendChild(el);
-    setTimeout(() => el.remove(), 950);
+    setTimeout(() => el.remove(), 900);
   }
 }
 
-// ── Progress ──
+// ── PROGRESS ──
 function updateProgress() {
   let total = 0, done = 0;
-  phases.forEach((phase, pi) => {
-    phase.tasks.forEach((_, ti) => {
-      total++;
-      if (state[`${pi}-${ti}`]) done++;
-    });
-  });
-  document.getElementById('progress-fill').style.width = total ? (done/total*100)+'%' : '0%';
-  document.getElementById('progress-count').textContent = done + ' / ' + total;
+  phases.forEach((p, pi) => p.tasks.forEach((_, ti) => { total++; if (state[`${pi}-${ti}`]) done++; }));
+  const pct = total ? done / total : 0;
+  document.getElementById('nav-fill').style.width = (pct * 100) + '%';
+  document.getElementById('nav-count').textContent = done + ' / ' + total;
+  const emojis = ['📦','🚛','🏗️','🔑','🏡'];
+  document.getElementById('nav-emoji').textContent = emojis[Math.min(4, Math.floor(pct * 5))];
   document.getElementById('done-banner').classList.toggle('visible', done === total && total > 0);
-  // emoji in progress bar
-  const emoji = document.querySelector('.progress-emoji');
-  const pct = total ? done/total : 0;
-  if (pct === 0) emoji.textContent = '📦';
-  else if (pct < 0.33) emoji.textContent = '🚛';
-  else if (pct < 0.66) emoji.textContent = '🏗️';
-  else if (pct < 1) emoji.textContent = '🔑';
-  else emoji.textContent = '🏡';
 }
 
-// ── Render ──
+// ── RENDER ──
 function render() {
-  const el = document.getElementById('checklist');
-  el.innerHTML = '';
-  phases.forEach((phase, pi) => {
-    const doneTasks = phase.tasks.filter((_, ti) => state[`${pi}-${ti}`]).length;
-    const allDone = doneTasks === phase.tasks.length;
-    const section = document.createElement('div');
-    section.className = `phase ${phase.colorClass}${allDone ? ' phase-done' : ''}`;
+  const root = document.getElementById('checklist');
+  root.innerHTML = '';
 
-    const header = document.createElement('div');
-    header.className = 'phase-header';
-    header.innerHTML = `
-      <span class="phase-icon">${phase.icon}</span>
-      <div class="phase-meta">
-        <div class="phase-title">${phase.label}</div>
-        <div class="phase-badge">${phase.badge}</div>
+  phases.forEach((phase, pi) => {
+    const doneCount = phase.tasks.filter((_, ti) => state[`${pi}-${ti}`]).length;
+    const allDone = doneCount === phase.tasks.length;
+
+    const section = document.createElement('div');
+    section.className = 'phase';
+
+    // header
+    section.innerHTML = `
+      <div class="phase-head">
+        <div class="phase-num" style="color: ${allDone ? phase.color.replace('var(', '').replace(')', '') : 'var(--rule)'}; opacity: ${allDone ? '0.25' : '1'}">${phase.icon}</div>
+        <div class="phase-info">
+          <div class="phase-title" style="${allDone ? 'opacity:0.45' : ''}">${phase.label}</div>
+          <div class="phase-sub">${phase.sub}</div>
+        </div>
+        <div class="phase-tally">
+          <strong style="color:${doneCount > 0 ? phase.color : 'var(--ink-faint)'}">${doneCount}</strong>
+          of ${phase.tasks.length}
+        </div>
       </div>
-      <span class="phase-progress-mini">${doneTasks} / ${phase.tasks.length}</span>
+      <div class="phase-rule ${doneCount > 0 ? 'active' : ''}" style="--phase-color:${phase.color}"></div>
     `;
-    section.appendChild(header);
 
     const list = document.createElement('div');
     list.className = 'task-list';
@@ -825,38 +705,47 @@ function render() {
     phase.tasks.forEach((task, ti) => {
       const id = `${pi}-${ti}`;
       const checked = !!state[id];
-      const imp = IMPORTANCE_CONFIG[task.importance] || IMPORTANCE_CONFIG.medium;
       const div = document.createElement('div');
       div.className = 'task' + (checked ? ' checked' : '');
+      div.dataset.imp = task.imp;
+
       div.innerHTML = `
-        <div class="checkbox"></div>
+        <div class="cb"></div>
         <div class="task-body">
-          <div class="task-text">${task.text}${task.urgent ? '<span class="urgent-tag">⚡ Urgent</span>' : ''}</div>
-          ${task.sub ? `<div class="task-sub">${task.sub}</div>` : ''}
-          <div class="task-indicators">
-            <span class="badge ${imp.cls}">${imp.label}</span>
-            <span class="badge badge-time">⏱ ${task.time}</span>
-            ${costBadge(task.cost)}
+          <div class="task-text">
+            ${task.text}${task.urgent ? '<span class="urgent-pip" title="Time-sensitive"></span>' : ''}
+          </div>
+          ${task.note ? `<div class="task-note">${task.note}</div>` : ''}
+          <div class="task-meta">
+            <div class="meta-time">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              ${task.time}
+            </div>
+            <div class="meta-sep"></div>
+            ${costDots(task.cost)}
           </div>
         </div>
       `;
+
       div.addEventListener('click', () => {
-        const wasChecked = !!state[id];
-        state[id] = !wasChecked;
-        saveState();
-        if (!wasChecked) {
-          const rect = div.getBoundingClientRect();
-          burst(rect.left + rect.width / 2, rect.top + rect.height / 2);
+        const was = !!state[id];
+        state[id] = !was;
+        save();
+        if (!was) {
+          const r = div.getBoundingClientRect();
+          burst(r.left + r.width / 2, r.top + r.height / 2);
         }
         render();
         updateProgress();
       });
+
       list.appendChild(div);
     });
 
     section.appendChild(list);
-    el.appendChild(section);
+    root.appendChild(section);
   });
+
   updateProgress();
 }
 
