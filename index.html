@@ -8,492 +8,531 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --bg: #f5f2ee;
-    --white: #ffffff;
-    --ink: #181520;
-    --ink-mid: #5a5468;
-    --ink-faint: #b0aab8;
-    --rule: rgba(24,21,32,0.08);
-
-    --c1: #6d28d9;   /* pre-move  — violet */
-    --c2: #be123c;   /* move out  — crimson */
-    --c3: #0369a1;   /* the gap   — sapphire */
-    --c4: #047857;   /* move in   — emerald */
-    --c5: #b45309;   /* settle in — amber */
-
-    --imp-must:   #dc2626;
-    --imp-high:   #ea580c;
-    --imp-medium: #4f46e5;
-    --imp-low:    #94a3b8;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--ink);
-    min-height: 100vh;
-  }
-
-  /* ─── HERO ─── */
-  .hero {
-    position: relative;
-    height: 560px;
-    overflow: hidden;
-    display: flex;
-    align-items: flex-end;
-  }
-
-  .hero-img {
-    position: absolute;
-    inset: 0;
-    width: 100%; height: 100%;
-    object-fit: cover;
-    object-position: center 55%;
-    filter: brightness(0.55) saturate(1.15);
-    transition: transform 10s ease;
-  }
-
-  .hero:hover .hero-img { transform: scale(1.04); }
-
-  .hero-overlay {
-    position: absolute; inset: 0;
-    background:
-      linear-gradient(to top, rgba(10,6,18,0.96) 0%, rgba(10,6,18,0.5) 45%, transparent 100%);
-  }
-
-  /* diagonal texture stripe */
-  .hero-overlay::after {
-    content: '';
-    position: absolute; inset: 0;
-    background-image: repeating-linear-gradient(
-      -45deg,
-      transparent,
-      transparent 3px,
-      rgba(255,255,255,0.012) 3px,
-      rgba(255,255,255,0.012) 4px
-    );
-  }
-
-  .hero-content {
-    position: relative; z-index: 2;
-    padding: 0 52px 52px;
-    width: 100%;
-  }
-
-  .hero-kicker {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.45);
-    margin-bottom: 14px;
-  }
-
-  .hero-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(44px, 7vw, 80px);
-    font-weight: 900;
-    color: #fff;
-    line-height: 0.97;
-    margin-bottom: 18px;
-    letter-spacing: -0.02em;
-  }
-
-  .hero-title em {
-    font-style: italic;
-    font-weight: 700;
-    color: transparent;
-    -webkit-text-stroke: 1.5px rgba(255,255,255,0.6);
-  }
-
-  .hero-chips {
-    display: flex; gap: 10px; flex-wrap: wrap;
-    margin-top: 24px;
-  }
-
-  .hero-chip {
-    display: flex; align-items: center; gap: 8px;
-    padding: 8px 16px;
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 100px;
-    background: rgba(255,255,255,0.07);
-    backdrop-filter: blur(10px);
-    font-size: 13px; color: #fff; font-weight: 500;
-  }
-
-  .hero-chip-dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: #fff;
-    opacity: 0.5;
-  }
-
-  /* ─── STICKY NAV ─── */
-  .nav {
-    position: sticky; top: 0; z-index: 200;
-    background: var(--ink);
-    padding: 0 52px;
-    display: flex; align-items: stretch;
-    height: 52px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
-  }
-
-  .nav-progress {
-    flex: 1;
-    display: flex; align-items: center; gap: 14px;
-  }
-
-  .nav-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.35);
-    white-space: nowrap;
-  }
-
-  .nav-track {
-    flex: 1; height: 3px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 2px;
-    overflow: visible;
-    position: relative;
-  }
-
-  .nav-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--c1), var(--c3), var(--c4));
-    border-radius: 2px;
-    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
-    width: 0%;
-  }
-
-  .nav-count {
-    font-family: 'Playfair Display', serif;
-    font-size: 18px; font-weight: 700;
-    color: #fff;
-    white-space: nowrap;
-  }
-
-  .nav-emoji {
-    font-size: 18px;
-    transition: all 0.3s;
-  }
-
-  /* ─── MAIN ─── */
-  .main {
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 64px 24px 120px;
-  }
-
-  /* ─── PHASE ─── */
-  .phase { margin-bottom: 72px; }
-
-  .phase-head {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-    gap: 0;
-    margin-bottom: 24px;
-  }
-
-  .phase-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 72px;
-    font-weight: 900;
-    line-height: 1;
-    color: var(--rule);
-    margin-right: 18px;
-    letter-spacing: -0.04em;
-    user-select: none;
-    transition: color 0.3s;
-  }
-
-  .phase:hover .phase-num { color: rgba(24,21,32,0.12); }
-
-  .phase-info {}
-
-  .phase-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px; font-weight: 700;
-    color: var(--ink);
-    line-height: 1.15;
-  }
-
-  .phase-sub {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px; letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-    margin-top: 3px;
-  }
-
-  .phase-tally {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    color: var(--ink-faint);
-    text-align: right;
-    white-space: nowrap;
-    padding-left: 16px;
-  }
-
-  .phase-tally strong {
-    font-size: 20px;
-    font-weight: 500;
-    color: var(--ink-mid);
-    display: block;
-    line-height: 1;
-  }
-
-  /* colored rule under phase head */
-  .phase-rule {
-    height: 2px;
-    border-radius: 1px;
-    margin-bottom: 16px;
-    background: var(--rule);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .phase-rule::after {
-    content: '';
-    position: absolute; inset: 0;
-    border-radius: 1px;
-    background: var(--phase-color, var(--rule));
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
-  }
-
-  .phase-rule.active::after { transform: scaleX(1); }
-
-  /* ─── TASKS ─── */
-  .task-list { display: flex; flex-direction: column; gap: 3px; }
-
-  .task {
-    display: grid;
-    grid-template-columns: 28px 1fr;
-    gap: 14px;
-    padding: 13px 16px 13px 16px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background 0.12s, box-shadow 0.12s, transform 0.12s;
-    background: var(--white);
-    border-left: 3px solid transparent;
-    position: relative;
-  }
-
-  /* importance → left border color */
-  .task[data-imp="critical"] { border-left-color: var(--imp-must); }
-  .task[data-imp="high"]     { border-left-color: var(--imp-high); }
-  .task[data-imp="medium"]   { border-left-color: var(--imp-medium); }
-  .task[data-imp="low"]      { border-left-color: var(--ink-faint); }
-
-  .task:hover {
-    background: #fff;
-    box-shadow: 0 4px 20px rgba(24,21,32,0.10);
-    transform: translateX(3px);
-  }
-
-  .task.checked {
-    background: rgba(24,21,32,0.03);
-    border-left-color: var(--rule) !important;
-  }
-
-  .task.checked:hover {
-    box-shadow: none;
-    transform: none;
-  }
-
-  /* checkbox */
-  .cb {
-    width: 20px; height: 20px;
-    border-radius: 5px;
-    border: 1.5px solid var(--rule);
-    background: #fff;
-    flex-shrink: 0;
-    margin-top: 2px;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.18s cubic-bezier(0.4,0,0.2,1);
-  }
-
-  .task.checked .cb {
-    background: var(--ink);
-    border-color: var(--ink);
-  }
-
-  .cb::after {
-    content: '';
-    width: 10px; height: 6px;
-    border-left: 2px solid #fff;
-    border-bottom: 2px solid #fff;
-    transform: rotate(-45deg) translate(0, -1px) scale(0);
-    transition: transform 0.18s cubic-bezier(0.4,0,0.2,1);
-  }
-
-  .task.checked .cb::after { transform: rotate(-45deg) translate(0,-1px) scale(1); }
-
-  /* body */
-  .task-body { min-width: 0; }
-
-  .task-text {
-    font-size: 14px; font-weight: 500;
-    color: var(--ink);
-    line-height: 1.45;
-    transition: color 0.15s;
-  }
-
-  .task.checked .task-text {
-    text-decoration: line-through;
-    color: var(--ink-faint);
-    font-weight: 400;
-  }
-
-  .task-note {
-    font-size: 12px;
-    color: var(--ink-faint);
-    margin-top: 3px;
-    line-height: 1.45;
-    font-weight: 400;
-  }
-
-  .task.checked .task-note { opacity: 0.5; }
-
-  /* subtle meta row */
-  .task-meta {
-    display: flex; align-items: center; gap: 10px;
-    margin-top: 7px;
-    opacity: 0;
-    transition: opacity 0.15s;
-  }
-
-  .task:hover .task-meta,
-  .task.checked .task-meta { opacity: 1; }
-
-  .meta-time {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px; color: var(--ink-faint);
-    letter-spacing: 0.04em;
-    display: flex; align-items: center; gap: 4px;
-  }
-
-  .meta-time svg { opacity: 0.5; }
-
-  .meta-cost {
-    display: flex; align-items: center; gap: 2px;
-  }
-
-  .cost-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-  }
-
-  .cost-dot.filled { background: var(--ink-mid); }
-  .cost-dot.empty  { background: var(--rule); border: 1px solid var(--ink-faint); opacity: 0.4; }
-
-  .meta-sep {
-    width: 1px; height: 10px;
-    background: var(--rule);
-  }
-
-  /* urgent pip */
-  .urgent-pip {
-    display: inline-block;
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--imp-must);
-    margin-left: 6px;
-    vertical-align: middle;
-    animation: pulse 1.8s ease-in-out infinite;
-    flex-shrink: 0;
-  }
-
-  @keyframes pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(220,38,38,0.5); }
-    50%       { box-shadow: 0 0 0 4px rgba(220,38,38,0); }
-  }
-
-  /* ─── CONFETTI ─── */
-  @keyframes fly {
-    0%   { transform: scale(0) rotate(0deg)   translateY(0);   opacity: 1; }
-    100% { transform: scale(1) rotate(600deg) translateY(-90px); opacity: 0; }
-  }
-
-  .cp {
-    position: fixed;
-    width: 8px; height: 8px;
-    border-radius: 2px;
-    pointer-events: none;
-    z-index: 9999;
-    animation: fly 0.8s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
-  }
-
-  /* ─── DONE BANNER ─── */
-  .done-banner {
-    text-align: center;
-    padding: 64px 32px;
-    margin-top: 48px;
-    border-radius: 20px;
-    background: var(--white);
-    border: 1px solid var(--rule);
-    display: none;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .done-banner::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(135deg,
-      rgba(109,40,217,0.04) 0%,
-      rgba(4,120,87,0.04) 50%,
-      rgba(180,83,9,0.04) 100%);
-  }
-
-  .done-banner.visible { display: block; animation: fadeUp 0.5s ease; }
-
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-
-  .done-banner h2 {
-    position: relative;
-    font-family: 'Playfair Display', serif;
-    font-size: 40px; font-weight: 900;
-    color: var(--ink);
-    margin-bottom: 10px;
-  }
-
-  .done-banner p {
-    position: relative;
-    color: var(--ink-faint); font-size: 15px;
-  }
-
-  /* ─── FOOTER ─── */
-  footer {
-    text-align: center;
-    padding: 32px;
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-    border-top: 1px solid var(--rule);
-  }
-
-  /* ─── RESPONSIVE ─── */
-  @media (max-width: 600px) {
-    .hero { height: 460px; }
-    .hero-content { padding: 0 24px 36px; }
-    .nav { padding: 0 20px; }
-    .main { padding: 40px 16px 80px; }
-    .phase-num { font-size: 48px; }
-    .phase-title { font-size: 18px; }
-  }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:    #fdf9f5;
+  --white: #ffffff;
+  --ink:   #17131f;
+  --mid:   #6b6478;
+  --faint: #c4bece;
+  --rule:  rgba(23,19,31,0.08);
+
+  --p1: #7c3aed;  /* violet   */
+  --p2: #c2410c;  /* burnt    */
+  --p3: #1d4ed8;  /* sapphire */
+  --p4: #065f46;  /* emerald  */
+  --p5: #92400e;  /* amber    */
+
+  --must:   #e11d48;
+  --high:   #ea580c;
+  --medium: #4f46e5;
+  --low:    #cbd5e1;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background-color: var(--bg);
+  background-image: radial-gradient(circle, rgba(23,19,31,0.055) 1px, transparent 1px);
+  background-size: 22px 22px;
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* ══════════════════════════════════
+   HERO
+══════════════════════════════════ */
+.hero {
+  position: relative;
+  height: 580px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+
+.hero-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 55%;
+  filter: brightness(0.5) saturate(1.2);
+  transition: transform 12s ease;
+}
+.hero:hover .hero-img { transform: scale(1.05); }
+
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(160deg,
+    rgba(23,19,31,0.1) 0%,
+    rgba(23,19,31,0.92) 100%);
+}
+
+.hero-content {
+  position: relative; z-index: 2;
+  padding: 0 56px 56px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: flex-end;
+  gap: 32px;
+}
+
+.hero-left {}
+
+.hero-kicker {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.hero-kicker::before {
+  content: '';
+  display: inline-block;
+  width: 28px; height: 1.5px;
+  background: rgba(255,255,255,0.3);
+  flex-shrink: 0;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(48px, 7.5vw, 88px);
+  font-weight: 900;
+  color: #fff;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+}
+.hero-title em {
+  font-style: italic;
+  font-weight: 700;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(255,255,255,0.55);
+}
+
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 4px;
+}
+
+.date-card {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.13);
+  backdrop-filter: blur(12px);
+  border-radius: 14px;
+  padding: 14px 20px;
+  min-width: 140px;
+}
+.date-card-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.38);
+  margin-bottom: 4px;
+}
+.date-card-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+.date-card-sub {
+  font-size: 11px; color: rgba(255,255,255,0.45);
+  margin-top: 3px;
+}
+
+/* ══════════════════════════════════
+   STICKY PROGRESS
+══════════════════════════════════ */
+.progress-bar {
+  position: sticky; top: 0; z-index: 200;
+  height: 56px;
+  background: var(--ink);
+  display: flex; align-items: center;
+  padding: 0 56px;
+  gap: 16px;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.35);
+}
+
+.pb-emoji { font-size: 20px; flex-shrink: 0; }
+
+.pb-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  white-space: nowrap;
+}
+
+.pb-segments {
+  flex: 1;
+  display: flex;
+  gap: 3px;
+  height: 5px;
+}
+
+.pb-seg {
+  flex: 1;
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.pb-seg-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+  width: 0%;
+}
+
+.pb-count {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+}
+
+/* ══════════════════════════════════
+   MAIN
+══════════════════════════════════ */
+.main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 72px 24px 120px;
+}
+
+/* ══════════════════════════════════
+   PHASE
+══════════════════════════════════ */
+.phase { margin-bottom: 80px; }
+
+.phase-banner {
+  border-radius: 16px;
+  padding: 24px 28px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+}
+
+.phase-banner-bg {
+  position: absolute; inset: 0;
+  background: var(--phase-color);
+  opacity: 0.92;
+}
+
+.phase-banner-pattern {
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(
+    -55deg,
+    transparent,
+    transparent 10px,
+    rgba(255,255,255,0.04) 10px,
+    rgba(255,255,255,0.04) 11px
+  );
+}
+
+.phase-banner-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 64px; font-weight: 900;
+  line-height: 1;
+  color: rgba(255,255,255,0.18);
+  letter-spacing: -0.04em;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  user-select: none;
+}
+
+.phase-banner-info { flex: 1; position: relative; z-index: 1; }
+
+.phase-banner-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 21px; font-weight: 700;
+  line-height: 1.15;
+  color: #fff;
+}
+
+.phase-banner-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  margin-top: 4px;
+}
+
+.phase-banner-right {
+  position: relative; z-index: 1;
+  text-align: right;
+}
+
+.phase-tally-big {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px; font-weight: 900;
+  color: rgba(255,255,255,0.9);
+  line-height: 1;
+}
+
+.phase-tally-small {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin-top: 2px;
+}
+
+/* phase mini-bar */
+.phase-minibar {
+  height: 3px;
+  background: rgba(255,255,255,0.18);
+  border-radius: 2px;
+  margin-top: 10px;
+  overflow: hidden;
+  position: relative; z-index: 1;
+}
+.phase-minibar-fill {
+  height: 100%;
+  background: rgba(255,255,255,0.7);
+  border-radius: 2px;
+  transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ══════════════════════════════════
+   TASKS
+══════════════════════════════════ */
+.task-list { display: flex; flex-direction: column; gap: 4px; }
+
+.task {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 13px 16px;
+  border-radius: 11px;
+  cursor: pointer;
+  background: var(--white);
+  border-left: 3.5px solid transparent;
+  transition: box-shadow 0.13s, transform 0.13s, background 0.13s;
+  box-shadow: 0 1px 3px rgba(23,19,31,0.06);
+}
+
+.task[data-imp="critical"] { border-left-color: var(--must); }
+.task[data-imp="high"]     { border-left-color: var(--high); }
+.task[data-imp="medium"]   { border-left-color: var(--medium); }
+.task[data-imp="low"]      { border-left-color: var(--low); }
+
+.task:hover {
+  box-shadow: 0 6px 24px rgba(23,19,31,0.12);
+  transform: translateY(-2px);
+  background: #fff;
+}
+
+.task.checked {
+  background: rgba(23,19,31,0.025);
+  border-left-color: var(--rule) !important;
+  box-shadow: none;
+}
+.task.checked:hover { transform: none; box-shadow: none; }
+
+/* checkbox */
+.cb {
+  width: 22px; height: 22px;
+  border-radius: 6px;
+  border: 1.5px solid var(--faint);
+  background: var(--white);
+  flex-shrink: 0;
+  margin-top: 1px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.18s cubic-bezier(0.4,0,0.2,1);
+}
+.task.checked .cb {
+  background: var(--ink); border-color: var(--ink);
+}
+.cb::after {
+  content: '';
+  width: 10px; height: 6px;
+  border-left: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(-45deg) translate(0,-1px) scale(0);
+  transition: transform 0.18s cubic-bezier(0.4,0,0.2,1);
+}
+.task.checked .cb::after { transform: rotate(-45deg) translate(0,-1px) scale(1); }
+
+/* body */
+.task-body { flex: 1; min-width: 0; }
+
+.task-text {
+  font-size: 14px; font-weight: 500;
+  color: var(--ink); line-height: 1.45;
+}
+.task.checked .task-text {
+  text-decoration: line-through;
+  color: var(--faint); font-weight: 400;
+}
+
+.task-note {
+  font-size: 12px; color: var(--mid);
+  margin-top: 3px; line-height: 1.5; font-weight: 400;
+}
+.task.checked .task-note { opacity: 0.45; }
+
+.urgent-pip {
+  display: inline-block;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--must);
+  margin-left: 6px; vertical-align: middle;
+  animation: pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes pulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(225,29,72,0.5); }
+  50%      { box-shadow: 0 0 0 4px rgba(225,29,72,0); }
+}
+
+/* ── RIGHT META COLUMN ── */
+/* always-visible, right-side: priority dot · time · cost dots */
+.task-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+  flex-shrink: 0;
+  padding-left: 10px;
+  padding-top: 2px;
+}
+
+.task.checked .task-meta { opacity: 0.3; }
+
+.meta-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.task[data-imp="critical"] .meta-dot { background: var(--must); }
+.task[data-imp="high"]     .meta-dot { background: var(--high); }
+.task[data-imp="medium"]   .meta-dot { background: var(--medium); }
+.task[data-imp="low"]      .meta-dot { background: var(--low); }
+
+.meta-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 9.5px;
+  color: var(--faint);
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.meta-coins {
+  display: flex; gap: 2px; align-items: center;
+}
+.coin {
+  width: 5px; height: 5px; border-radius: 50%;
+}
+.coin.on  { background: var(--mid); }
+.coin.off { background: var(--rule); }
+
+/* ══════════════════════════════════
+   CONFETTI
+══════════════════════════════════ */
+@keyframes fly {
+  0%   { transform: scale(0) rotate(0deg) translateY(0); opacity: 1; }
+  100% { transform: scale(1.1) rotate(580deg) translateY(-100px); opacity: 0; }
+}
+.cp {
+  position: fixed; width: 9px; height: 9px;
+  border-radius: 2px; pointer-events: none; z-index: 9999;
+  animation: fly 0.85s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
+}
+
+/* ══════════════════════════════════
+   DONE BANNER
+══════════════════════════════════ */
+.done-banner {
+  text-align: center; padding: 72px 32px;
+  margin-top: 56px; border-radius: 20px;
+  background: var(--white);
+  border: 1px solid var(--rule);
+  display: none; position: relative; overflow: hidden;
+}
+.done-banner::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg,
+    rgba(124,58,237,0.05) 0%,
+    rgba(4,120,87,0.05) 100%);
+}
+.done-banner.visible { display: block; animation: up 0.5s ease; }
+@keyframes up { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+.done-banner h2 {
+  position: relative;
+  font-family: 'Playfair Display', serif;
+  font-size: 44px; font-weight: 900; color: var(--ink);
+  margin-bottom: 10px;
+}
+.done-banner p {
+  position: relative;
+  color: var(--mid); font-size: 16px;
+}
+
+/* ── PHASE SUB-DIVIDER ── */
+.phase-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0 10px;
+  padding: 0 4px;
+}
+.phase-divider-line {
+  flex: 1; height: 1px;
+  background: var(--rule);
+}
+.phase-divider-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--faint);
+  white-space: nowrap;
+  padding: 3px 10px;
+  border: 1px solid var(--rule);
+  border-radius: 20px;
+}
+
+/* ══════════════════════════════════
+   FOOTER
+══════════════════════════════════ */
+footer {
+  text-align: center; padding: 32px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--faint);
+  border-top: 1px solid var(--rule);
+}
+
+/* ══════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════ */
+@media (max-width: 640px) {
+  .hero { height: 520px; }
+  .hero-content { grid-template-columns: 1fr; padding: 0 24px 36px; gap: 20px; }
+  .hero-right { flex-direction: row; }
+  .progress-bar { padding: 0 20px; gap: 10px; }
+  .pb-label { display: none; }
+  .main { padding: 40px 16px 80px; }
+  .phase-banner { padding: 18px 20px; }
+  .phase-banner-num { font-size: 44px; }
+  .phase-banner-title { font-size: 17px; }
+}
 </style>
 </head>
 <body>
@@ -503,171 +542,193 @@
   <img class="hero-img" src="https://photos.zillowstatic.com/fp/d7f56492e936a86a994e654a94d4a60a-cc_ft_1152.webp" alt="New home" onerror="this.style.display='none'">
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-kicker">June 2025 · The Big Move</div>
-    <div class="hero-title">
-      Boxes,<br>Chaos &amp;<br><em>a New Address</em>
+    <div class="hero-left">
+      <div class="hero-kicker">June 2025 · The Big Move</div>
+      <div class="hero-title">Boxes,<br>Chaos &amp;<br><em>a New<br>Address</em></div>
     </div>
-    <div class="hero-chips">
-      <div class="hero-chip"><div class="hero-chip-dot" style="background:#f97316"></div>Out Jun 15</div>
-      <div class="hero-chip"><div class="hero-chip-dot" style="background:#22c55e"></div>In Jun 22</div>
-      <div class="hero-chip"><div class="hero-chip-dot" style="background:#a78bfa"></div>7-day gap 😅</div>
+    <div class="hero-right">
+      <div class="date-card">
+        <div class="date-card-label">We're out</div>
+        <div class="date-card-value">June 15</div>
+        <div class="date-card-sub">Possession transferred</div>
+      </div>
+      <div class="date-card">
+        <div class="date-card-label">We're in</div>
+        <div class="date-card-value">June 22</div>
+        <div class="date-card-sub">Keys in hand 🔑</div>
+      </div>
+      <div class="date-card">
+        <div class="date-card-label">The gap</div>
+        <div class="date-card-value">7 days 😅</div>
+        <div class="date-card-sub">Temporarily homeless</div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- STICKY NAV -->
-<div class="nav">
-  <div class="nav-progress">
-    <span class="nav-emoji" id="nav-emoji">📦</span>
-    <span class="nav-label">Done</span>
-    <div class="nav-track"><div class="nav-fill" id="nav-fill"></div></div>
-    <div class="nav-count" id="nav-count">0 / 0</div>
-  </div>
+<!-- STICKY PROGRESS -->
+<div class="progress-bar">
+  <div class="pb-emoji" id="pb-emoji">📦</div>
+  <div class="pb-label">Progress</div>
+  <div class="pb-segments" id="pb-segments"></div>
+  <div class="pb-count" id="pb-count">0 / 0</div>
 </div>
 
 <!-- MAIN -->
 <div class="main">
   <div id="checklist"></div>
   <div class="done-banner" id="done-banner">
-    <div style="font-size:72px;margin-bottom:16px;position:relative">🏡</div>
+    <div style="font-size:76px;margin-bottom:18px;position:relative">🏡</div>
     <h2>You're officially home.</h2>
     <p>Every single box checked. Time to crack open something nice.</p>
   </div>
 </div>
 
-<footer>Made with love · June 2025</footer>
+<footer>Made with love &nbsp;·&nbsp; June 2025</footer>
 
 <script>
 // ── DATA ──
-// importance: critical | high | medium | low
-// cost: 0=free, 1=$, 2=$$, 3=$$$
+// cost: 0=free 1=$ 2=$$ 3=$$$
 const phases = [
   {
-    icon: "01", label: "Now → June 14", sub: "Pre-move", color: "var(--c1)",
-    tasks: [
-      { text: "Confirm possession dates in writing with both agents/lawyers", note: "Sell closes 6/15, buy closes 6/22", imp: "high",     time: "30m",          cost: 0 },
-      { text: "Order PODS container — schedule delivery to current house",    note: "Book now; they need several days' lead time",        imp: "critical",  time: "30m",          cost: 3, urgent: true },
-      { text: "Confirm PODS pickup date from sold house (after 6/15 closing)",note: "POD serves as your storage during the gap",           imp: "critical",  time: "15m",          cost: 0 },
-      { text: "Schedule PODS delivery to new house for 6/22 or 6/23",        note: "Confirm this aligns with your closing time",          imp: "critical",  time: "15m",          cost: 0, urgent: true },
-      { text: "Check if city or HOA requires a street permit for the POD",   note: "May need a few days to process",                    imp: "high",      time: "1h",           cost: 1 },
-      { text: "Confirm flat, accessible drop spot for POD at current house", note: "Driveway preferred; street requires permit",          imp: "medium",    time: "15m",          cost: 0 },
-      { text: "Arrange temporary housing for 6/15–6/21",                     note: "Hotel, family, Airbnb — book now",                   imp: "critical",  time: "1h",           cost: 3, urgent: true },
-      { text: "Confirm utilities shutoff at sold house for 6/15",            note: "",                                                   imp: "high",      time: "30m",          cost: 0 },
-      { text: "Set up utilities at new house starting 6/22",                 note: "Electric, gas, water, internet",                    imp: "critical",  time: "1h",           cost: 1, urgent: true },
-      { text: "Forward mail via USPS (submit change of address form)",       note: "usps.com — takes a few days to activate",            imp: "high",      time: "15m",          cost: 0 },
-      { text: "Notify employer HR of new address (for tax/payroll)",         note: "",                                                   imp: "medium",    time: "15m",          cost: 0 },
-      { text: "Update address with bank and credit card companies",          note: "",                                                   imp: "high",      time: "1h",           cost: 0 },
-      { text: "Update address with insurance providers",                     note: "Home, auto, health, life",                          imp: "high",      time: "1h",           cost: 0 },
-      { text: "Notify subscriptions and online accounts of new address",     note: "Amazon, Apple ID, Google, etc.",                    imp: "medium",    time: "1h",           cost: 0 },
-      { text: "Transfer or cancel local services",                           note: "Lawn care, cleaning, trash, alarm monitoring",       imp: "medium",    time: "1h",           cost: 0 },
-      { text: "Sort and declutter — donate, sell, or toss before packing",   note: "Saves time and money on the move",                  imp: "high",      time: "2–3 days",     cost: 0 },
-      { text: "Buy packing supplies",                                        note: "Boxes, tape, bubble wrap, furniture pads, markers",  imp: "high",      time: "1h",           cost: 2 },
-      { text: "Pack the POD strategically as you load",                      note: "Heaviest items on floor against front wall",         imp: "high",      time: "full day",     cost: 0 },
-      { text: "Pack non-essentials and label all boxes by room",             note: "",                                                   imp: "high",      time: "several days", cost: 0 },
-      { text: "Pack an essentials bag/box — keep it out of the POD",        note: "Toiletries, meds, chargers, docs, a few days of clothes", imp: "critical", time: "1h",      cost: 0 },
-      { text: "Lock the POD after each packing session",                     note: "",                                                   imp: "high",      time: "5m",           cost: 0 },
-      { text: "Photograph all valuables for insurance records",              note: "",                                                   imp: "high",      time: "1h",           cost: 0 },
-      { text: "Gather important documents",                                  note: "IDs, closing docs, insurance, passports, medical",   imp: "critical",  time: "30m",          cost: 0 },
-      { text: "Clean out and defrost fridge/freezer before move day",        note: "",                                                   imp: "high",      time: "2h",           cost: 0 },
-      { text: "Disassemble large furniture that won't fit assembled",        note: "",                                                   imp: "medium",    time: "2–3h",         cost: 0 },
-      { text: "Return borrowed items; collect items you've lent out",        note: "",                                                   imp: "low",       time: "varies",       cost: 0 },
-      { text: "Do a final walkthrough of sold house",                        note: "Check attic, garage, under decks, storage",          imp: "high",      time: "1h",           cost: 0 },
+    num:"01", label:"Now → June 14", sub:"Pre-move", color:"#7c3aed",
+    divider: 8, // insert divider after index 7 (before "after Memorial Day" tasks)
+    dividerLabel: "After Memorial Day — May 27 →",
+    tasks:[
+      // ── Before Memorial Day (do these NOW) ──
+      {t:"Confirm possession dates in writing with both agents/lawyers",    n:"Sell closes 6/15, buy closes 6/22",                      i:"high",     time:"30m",          cost:0},
+      {t:"Order PODS container — schedule delivery to current house",       n:"Book now; they need several days' lead time",             i:"critical", time:"30m",          cost:3, u:true},
+      {t:"Confirm PODS pickup date from sold house (after 6/15 closing)",   n:"POD serves as your storage during the gap",               i:"critical", time:"15m",          cost:0},
+      {t:"Schedule PODS delivery to new house for 6/22 or 6/23",           n:"Confirm this aligns with your closing time",              i:"critical", time:"15m",          cost:0, u:true},
+      {t:"Arrange temporary housing for 6/15–6/21",                        n:"Hotel, family, Airbnb — book now",                       i:"critical", time:"1h",           cost:3, u:true},
+      {t:"Set up utilities at new house starting 6/22",                    n:"Electric, gas, water, internet",                        i:"critical", time:"1h",           cost:1, u:true},
+      {t:"Sort and declutter — donate, sell, or toss before packing",      n:"Saves time and money on the move",                      i:"high",     time:"2–3 days",     cost:0},
+      {t:"Buy packing supplies",                                           n:"Boxes, tape, bubble wrap, furniture pads, markers",     i:"high",     time:"1h",           cost:2},
+      // ── After Memorial Day ──
+      {t:"Check if city or HOA requires a street permit for the POD",      n:"May need a few days to process",                         i:"high",     time:"1h",           cost:1},
+      {t:"Confirm flat, accessible drop spot for POD at current house",    n:"Driveway preferred; street requires permit",              i:"medium",   time:"15m",          cost:0},
+      {t:"Confirm utilities shutoff at sold house for 6/15",               n:"",                                                       i:"high",     time:"30m",          cost:0},
+      {t:"Forward mail via USPS (submit change of address form)",          n:"usps.com — takes a few days to activate",                i:"high",     time:"15m",          cost:0},
+      {t:"Notify employer HR of new address (for tax/payroll)",            n:"",                                                       i:"medium",   time:"15m",          cost:0},
+      {t:"Update address with bank and credit card companies",             n:"",                                                       i:"high",     time:"1h",           cost:0},
+      {t:"Update address with insurance providers",                        n:"Home, auto, health, life",                               i:"high",     time:"1h",           cost:0},
+      {t:"Notify subscriptions and online accounts of new address",        n:"Amazon, Apple ID, Google, etc.",                        i:"medium",   time:"1h",           cost:0},
+      {t:"Transfer or cancel local services",                              n:"Lawn care, cleaning, trash, alarm monitoring",           i:"medium",   time:"1h",           cost:0},
+      {t:"Pack the POD strategically as you load",                         n:"Heaviest items on floor against front wall",             i:"high",     time:"full day",     cost:0},
+      {t:"Pack non-essentials and label all boxes by room",                n:"",                                                       i:"high",     time:"several days", cost:0},
+      {t:"Pack an essentials bag/box — keep it out of the POD",           n:"Toiletries, meds, chargers, docs, a few days of clothes",i:"critical", time:"1h",           cost:0},
+      {t:"Lock the POD after each packing session",                        n:"",                                                       i:"high",     time:"5m",           cost:0},
+      {t:"Photograph all valuables for insurance records",                 n:"",                                                       i:"high",     time:"1h",           cost:0},
+      {t:"Gather important documents",                                     n:"IDs, closing docs, insurance, passports, medical",      i:"critical", time:"30m",          cost:0},
+      {t:"Clean out and defrost fridge/freezer before move day",           n:"",                                                       i:"high",     time:"2h",           cost:0},
+      {t:"Disassemble large furniture that won't fit assembled",           n:"",                                                       i:"medium",   time:"2–3h",         cost:0},
+      {t:"Return borrowed items; collect items you've lent out",           n:"",                                                       i:"low",      time:"varies",       cost:0},
+      {t:"Do a final walkthrough of sold house",                           n:"Check attic, garage, under decks, storage",              i:"high",     time:"1h",           cost:0},
     ]
   },
   {
-    icon: "02", label: "June 15 — Move out", sub: "Move-out day", color: "var(--c2)",
-    tasks: [
-      { text: "Finish loading POD and lock it",                              note: "",                                                   imp: "critical",  time: "half day",     cost: 0, urgent: true },
-      { text: "Do room-by-room sweep before handing over keys",              note: "Closets, cabinets, garage, shed, basement",          imp: "critical",  time: "1h",           cost: 0 },
-      { text: "Leave house in the condition required by the contract",       note: "",                                                   imp: "critical",  time: "2–3h",         cost: 1 },
-      { text: "Hand over all keys, fobs, garage remotes, mailbox keys",     note: "",                                                   imp: "critical",  time: "15m",          cost: 0 },
-      { text: "Confirm closing documents are signed and funds disbursed",    note: "Coordinate with your real estate lawyer/agent",      imp: "critical",  time: "30m",          cost: 0 },
-      { text: "Take photos of the house condition as you leave",             note: "",                                                   imp: "high",      time: "30m",          cost: 0 },
-      { text: "Confirm PODS pickup is scheduled from this address",          note: "",                                                   imp: "high",      time: "15m",          cost: 0 },
+    num:"02", label:"June 15 — Move out", sub:"Move-out day", color:"#c2410c",
+    tasks:[
+      {t:"Finish loading POD and lock it",                                 n:"",                                                       i:"critical", time:"half day",     cost:0, u:true},
+      {t:"Do room-by-room sweep before handing over keys",                 n:"Closets, cabinets, garage, shed, basement",              i:"critical", time:"1h",           cost:0},
+      {t:"Leave house in the condition required by the contract",          n:"",                                                       i:"critical", time:"2–3h",         cost:1},
+      {t:"Hand over all keys, fobs, garage remotes, mailbox keys",        n:"",                                                       i:"critical", time:"15m",          cost:0},
+      {t:"Confirm closing documents are signed and funds disbursed",       n:"Coordinate with your real estate lawyer/agent",          i:"critical", time:"30m",          cost:0},
+      {t:"Take photos of the house condition as you leave",                n:"",                                                       i:"high",     time:"30m",          cost:0},
+      {t:"Confirm PODS pickup is scheduled from this address",             n:"",                                                       i:"high",     time:"15m",          cost:0},
     ]
   },
   {
-    icon: "03", label: "June 15–21 — The gap", sub: "Temporarily homeless 😅", color: "var(--c3)",
-    tasks: [
-      { text: "Stay in pre-arranged temporary housing",                      note: "",                                                   imp: "critical",  time: "7 days",       cost: 3 },
-      { text: "Confirm 6/22 closing is on track with agent/lawyer",         note: "Watch for any delays or conditions",                 imp: "critical",  time: "30m",          cost: 0 },
-      { text: "Confirm PODS delivery window to new house for 6/22 or 6/23", note: "",                                                   imp: "critical",  time: "15m",          cost: 0 },
-      { text: "Confirm utility activation at new house for 6/22",           note: "",                                                   imp: "critical",  time: "15m",          cost: 0 },
-      { text: "Plan first-night essentials",                                 note: "Essentials bag should be with you, not in the POD",  imp: "high",      time: "15m",          cost: 0 },
+    num:"03", label:"June 15–21 — The gap", sub:"Temporarily homeless 😅", color:"#1d4ed8",
+    tasks:[
+      {t:"Stay in pre-arranged temporary housing",                         n:"",                                                       i:"critical", time:"7 days",       cost:3},
+      {t:"Confirm 6/22 closing is on track with agent/lawyer",            n:"Watch for any delays or conditions",                    i:"critical", time:"30m",          cost:0},
+      {t:"Confirm PODS delivery window to new house for 6/22 or 6/23",    n:"",                                                       i:"critical", time:"15m",          cost:0},
+      {t:"Confirm utility activation at new house for 6/22",              n:"",                                                       i:"critical", time:"15m",          cost:0},
+      {t:"Plan first-night essentials",                                    n:"Essentials bag should be with you, not in the POD",     i:"high",     time:"15m",          cost:0},
     ]
   },
   {
-    icon: "04", label: "June 22 — Move in!", sub: "The big day", color: "var(--c4)",
-    tasks: [
-      { text: "Complete closing paperwork and receive keys",                 note: "",                                                   imp: "critical",  time: "2h",           cost: 0, urgent: true },
-      { text: "Do a pre-move-in walkthrough to check condition of home",     note: "",                                                   imp: "high",      time: "1h",           cost: 0 },
-      { text: "Photograph any existing damage before unloading",            note: "Protects you from disputes later",                   imp: "high",      time: "30m",          cost: 0 },
-      { text: "Confirm flat, accessible drop spot for POD at new house",     note: "Driveway preferred; check HOA rules",               imp: "medium",    time: "15m",          cost: 0 },
-      { text: "Unload POD into correct rooms using box labels",              note: "",                                                   imp: "critical",  time: "full day",     cost: 0 },
-      { text: "Check that utilities are live: electric, gas, water, internet", note: "",                                                imp: "critical",  time: "30m",          cost: 0 },
-      { text: "Locate main water shutoff, electrical panel, and gas shutoff", note: "",                                                 imp: "high",      time: "30m",          cost: 0 },
-      { text: "Change or rekey all locks",                                   note: "You don't know who has copies of the old keys",      imp: "critical",  time: "2h",           cost: 2, urgent: true },
-      { text: "Test smoke detectors and carbon monoxide detectors",          note: "",                                                   imp: "high",      time: "30m",          cost: 1 },
-      { text: "Set up essentials first: beds, bathroom, kitchen basics",    note: "",                                                   imp: "high",      time: "2h",           cost: 0 },
-      { text: "Schedule PODS pickup once fully unloaded",                    note: "Don't pay for extra days you don't need",            imp: "medium",    time: "15m",          cost: 0 },
+    num:"04", label:"June 22 — Move in!", sub:"The big day", color:"#065f46",
+    tasks:[
+      {t:"Complete closing paperwork and receive keys",                    n:"",                                                       i:"critical", time:"2h",           cost:0, u:true},
+      {t:"Do a pre-move-in walkthrough to check condition of home",        n:"",                                                       i:"high",     time:"1h",           cost:0},
+      {t:"Photograph any existing damage before unloading",               n:"Protects you from disputes later",                      i:"high",     time:"30m",          cost:0},
+      {t:"Confirm flat, accessible drop spot for POD at new house",        n:"Driveway preferred; check HOA rules",                   i:"medium",   time:"15m",          cost:0},
+      {t:"Unload POD into correct rooms using box labels",                 n:"",                                                       i:"critical", time:"full day",     cost:0},
+      {t:"Check that utilities are live: electric, gas, water, internet",  n:"",                                                       i:"critical", time:"30m",          cost:0},
+      {t:"Locate main water shutoff, electrical panel, and gas shutoff",   n:"",                                                       i:"high",     time:"30m",          cost:0},
+      {t:"Change or rekey all locks",                                      n:"You don't know who has copies of the old keys",          i:"critical", time:"2h",           cost:2, u:true},
+      {t:"Test smoke detectors and carbon monoxide detectors",             n:"",                                                       i:"high",     time:"30m",          cost:1},
+      {t:"Set up essentials first: beds, bathroom, kitchen basics",       n:"",                                                       i:"high",     time:"2h",           cost:0},
+      {t:"Schedule PODS pickup once fully unloaded",                       n:"Don't pay for extra days you don't need",                i:"medium",   time:"15m",          cost:0},
     ]
   },
   {
-    icon: "05", label: "June 23 onward — Settle in", sub: "Post-move", color: "var(--c5)",
-    tasks: [
-      { text: "Update driver's license with new address",                   note: "Usually required within 30–60 days by state law",    imp: "high",      time: "2h",           cost: 1 },
-      { text: "Update vehicle registration with new address",               note: "",                                                   imp: "high",      time: "1h",           cost: 1 },
-      { text: "Register to vote at new address (if different county/state)", note: "",                                                   imp: "medium",    time: "15m",          cost: 0 },
-      { text: "Notify your kids' schools (or update enrollment if needed)", note: "",                                                   imp: "high",      time: "30m",          cost: 0 },
-      { text: "Transfer medical providers or notify of new address",        note: "",                                                   imp: "medium",    time: "1h",           cost: 0 },
-      { text: "Update address with Social Security if applicable",          note: "",                                                   imp: "medium",    time: "30m",          cost: 0 },
-      { text: "Find nearest hospital, urgent care, and pharmacy",           note: "",                                                   imp: "high",      time: "15m",          cost: 0 },
-      { text: "Get to know HOA rules if applicable",                        note: "Trash days, parking, mailbox rules",                 imp: "medium",    time: "30m",          cost: 0 },
-      { text: "Schedule any inspections or repairs identified at closing",  note: "",                                                   imp: "high",      time: "1h",           cost: 0 },
-      { text: "Unpack systematically — kitchen and bedrooms first",         note: "",                                                   imp: "high",      time: "several days", cost: 0 },
-      { text: "Break down boxes and dispose of packing materials",          note: "",                                                   imp: "low",       time: "1h",           cost: 0 },
+    num:"05", label:"June 23 onward — Settle in", sub:"Post-move", color:"#92400e",
+    tasks:[
+      {t:"Update driver's license with new address",                      n:"Usually required within 30–60 days by state law",       i:"high",     time:"2h",           cost:1},
+      {t:"Update vehicle registration with new address",                  n:"",                                                       i:"high",     time:"1h",           cost:1},
+      {t:"Register to vote at new address (if different county/state)",   n:"",                                                       i:"medium",   time:"15m",          cost:0},
+      {t:"Notify your kids' schools (or update enrollment if needed)",    n:"",                                                       i:"high",     time:"30m",          cost:0},
+      {t:"Transfer medical providers or notify of new address",           n:"",                                                       i:"medium",   time:"1h",           cost:0},
+      {t:"Update address with Social Security if applicable",             n:"",                                                       i:"medium",   time:"30m",          cost:0},
+      {t:"Find nearest hospital, urgent care, and pharmacy",              n:"",                                                       i:"high",     time:"15m",          cost:0},
+      {t:"Get to know HOA rules if applicable",                           n:"Trash days, parking, mailbox rules",                    i:"medium",   time:"30m",          cost:0},
+      {t:"Schedule any inspections or repairs identified at closing",     n:"",                                                       i:"high",     time:"1h",           cost:0},
+      {t:"Unpack systematically — kitchen and bedrooms first",            n:"",                                                       i:"high",     time:"several days", cost:0},
+      {t:"Break down boxes and dispose of packing materials",             n:"",                                                       i:"low",      time:"1h",           cost:0},
     ]
   }
 ];
 
-// ── COST DOTS ──
-function costDots(n) {
-  const max = 3;
-  let html = '<div class="meta-cost" title="' + ['Free','$','$$','$$$'][n] + '">';
-  for (let i = 0; i < max; i++) {
-    html += `<div class="cost-dot ${i < n ? 'filled' : 'empty'}"></div>`;
-  }
-  return html + '</div>';
-}
-
 // ── STATE ──
-const KEY = 'moving-2025-v2';
+const KEY = 'moving-2025-v3';
 let state = JSON.parse(localStorage.getItem(KEY) || '{}');
 function save() { localStorage.setItem(KEY, JSON.stringify(state)); }
 
 // ── CONFETTI ──
 function burst(x, y) {
-  const palette = ['#6d28d9','#be123c','#0369a1','#047857','#b45309','#f59e0b','#f97316','#e11d48'];
-  for (let i = 0; i < 16; i++) {
+  const pal = ['#7c3aed','#c2410c','#1d4ed8','#065f46','#92400e','#f59e0b','#e11d48','#0891b2'];
+  for (let i = 0; i < 18; i++) {
     const el = document.createElement('div');
     el.className = 'cp';
-    const a = Math.random() * Math.PI * 2;
-    const r = 20 + Math.random() * 60;
-    el.style.cssText = `left:${x+Math.cos(a)*r}px;top:${y+Math.sin(a)*r}px;background:${palette[Math.random()*palette.length|0]};animation-delay:${Math.random()*0.1}s`;
+    const a = Math.random() * Math.PI * 2, r = 24 + Math.random() * 64;
+    el.style.cssText = `left:${x+Math.cos(a)*r}px;top:${y+Math.sin(a)*r}px;background:${pal[Math.random()*pal.length|0]};animation-delay:${Math.random()*0.12}s`;
     document.body.appendChild(el);
-    setTimeout(() => el.remove(), 900);
+    setTimeout(() => el.remove(), 1000);
   }
+}
+
+// ── BUILD PROGRESS SEGMENTS ──
+function buildSegments() {
+  const wrap = document.getElementById('pb-segments');
+  wrap.innerHTML = '';
+  phases.forEach((p, pi) => {
+    const seg = document.createElement('div');
+    seg.className = 'pb-seg';
+    const fill = document.createElement('div');
+    fill.className = 'pb-seg-fill';
+    fill.id = `seg-${pi}`;
+    fill.style.background = p.color;
+    seg.appendChild(fill);
+    wrap.appendChild(seg);
+  });
 }
 
 // ── PROGRESS ──
 function updateProgress() {
   let total = 0, done = 0;
-  phases.forEach((p, pi) => p.tasks.forEach((_, ti) => { total++; if (state[`${pi}-${ti}`]) done++; }));
+  phases.forEach((p, pi) => {
+    let pd = 0;
+    p.tasks.forEach((_, ti) => { total++; if (state[`${pi}-${ti}`]) { done++; pd++; } });
+    const fill = document.getElementById(`seg-${pi}`);
+    if (fill) fill.style.width = (p.tasks.length ? pd / p.tasks.length * 100 : 0) + '%';
+  });
+  document.getElementById('pb-count').textContent = done + ' / ' + total;
   const pct = total ? done / total : 0;
-  document.getElementById('nav-fill').style.width = (pct * 100) + '%';
-  document.getElementById('nav-count').textContent = done + ' / ' + total;
   const emojis = ['📦','🚛','🏗️','🔑','🏡'];
-  document.getElementById('nav-emoji').textContent = emojis[Math.min(4, Math.floor(pct * 5))];
+  document.getElementById('pb-emoji').textContent = emojis[Math.min(4, Math.floor(pct * 5))];
   document.getElementById('done-banner').classList.toggle('visible', done === total && total > 0);
 }
 
@@ -678,52 +739,80 @@ function render() {
 
   phases.forEach((phase, pi) => {
     const doneCount = phase.tasks.filter((_, ti) => state[`${pi}-${ti}`]).length;
-    const allDone = doneCount === phase.tasks.length;
+    const pct = phase.tasks.length ? doneCount / phase.tasks.length : 0;
 
     const section = document.createElement('div');
     section.className = 'phase';
 
-    // header
-    section.innerHTML = `
-      <div class="phase-head">
-        <div class="phase-num" style="color: ${allDone ? phase.color.replace('var(', '').replace(')', '') : 'var(--rule)'}; opacity: ${allDone ? '0.25' : '1'}">${phase.icon}</div>
-        <div class="phase-info">
-          <div class="phase-title" style="${allDone ? 'opacity:0.45' : ''}">${phase.label}</div>
-          <div class="phase-sub">${phase.sub}</div>
-        </div>
-        <div class="phase-tally">
-          <strong style="color:${doneCount > 0 ? phase.color : 'var(--ink-faint)'}">${doneCount}</strong>
-          of ${phase.tasks.length}
-        </div>
+    // banner
+    const banner = document.createElement('div');
+    banner.className = 'phase-banner';
+    banner.innerHTML = `
+      <div class="phase-banner-bg" style="background:${phase.color}"></div>
+      <div class="phase-banner-pattern"></div>
+      <div class="phase-banner-num">${phase.num}</div>
+      <div class="phase-banner-info">
+        <div class="phase-banner-title">${phase.label}</div>
+        <div class="phase-banner-sub">${phase.sub}</div>
+        <div class="phase-minibar"><div class="phase-minibar-fill" style="width:${pct*100}%"></div></div>
       </div>
-      <div class="phase-rule ${doneCount > 0 ? 'active' : ''}" style="--phase-color:${phase.color}"></div>
+      <div class="phase-banner-right">
+        <div class="phase-tally-big">${doneCount}</div>
+        <div class="phase-tally-small">of ${phase.tasks.length} done</div>
+      </div>
     `;
+    section.appendChild(banner);
 
+    // tasks
     const list = document.createElement('div');
     list.className = 'task-list';
 
+    // leading label for phases with a divider
+    if (phase.divider) {
+      const lead = document.createElement('div');
+      lead.className = 'phase-divider';
+      lead.style.marginTop = '0';
+      lead.innerHTML = `
+        <div class="phase-divider-line"></div>
+        <div class="phase-divider-label">Before Memorial Day — do now</div>
+        <div class="phase-divider-line"></div>
+      `;
+      list.appendChild(lead);
+    }
+
     phase.tasks.forEach((task, ti) => {
+      // inject divider between sub-sections
+      if (phase.divider && ti === phase.divider) {
+        const div = document.createElement('div');
+        div.className = 'phase-divider';
+        div.innerHTML = `
+          <div class="phase-divider-line"></div>
+          <div class="phase-divider-label">${phase.dividerLabel}</div>
+          <div class="phase-divider-line"></div>
+        `;
+        list.appendChild(div);
+      }
+
       const id = `${pi}-${ti}`;
       const checked = !!state[id];
+
+      let coins = '<div class="meta-coins">';
+      for (let c = 0; c < 3; c++) coins += `<div class="coin ${c < task.cost ? 'on' : 'off'}"></div>`;
+      coins += '</div>';
+
       const div = document.createElement('div');
       div.className = 'task' + (checked ? ' checked' : '');
-      div.dataset.imp = task.imp;
-
+      div.dataset.imp = task.i;
       div.innerHTML = `
         <div class="cb"></div>
         <div class="task-body">
-          <div class="task-text">
-            ${task.text}${task.urgent ? '<span class="urgent-pip" title="Time-sensitive"></span>' : ''}
-          </div>
-          ${task.note ? `<div class="task-note">${task.note}</div>` : ''}
-          <div class="task-meta">
-            <div class="meta-time">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-              ${task.time}
-            </div>
-            <div class="meta-sep"></div>
-            ${costDots(task.cost)}
-          </div>
+          <div class="task-text">${task.t}${task.u ? '<span class="urgent-pip" title="Time-sensitive"></span>' : ''}</div>
+          ${task.n ? `<div class="task-note">${task.n}</div>` : ''}
+        </div>
+        <div class="task-meta">
+          <div class="meta-dot"></div>
+          <div class="meta-time">${task.time}</div>
+          ${coins}
         </div>
       `;
 
@@ -731,12 +820,8 @@ function render() {
         const was = !!state[id];
         state[id] = !was;
         save();
-        if (!was) {
-          const r = div.getBoundingClientRect();
-          burst(r.left + r.width / 2, r.top + r.height / 2);
-        }
-        render();
-        updateProgress();
+        if (!was) { const r = div.getBoundingClientRect(); burst(r.left + r.width/2, r.top + r.height/2); }
+        render(); updateProgress();
       });
 
       list.appendChild(div);
@@ -749,6 +834,7 @@ function render() {
   updateProgress();
 }
 
+buildSegments();
 render();
 </script>
 </body>
