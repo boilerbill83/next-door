@@ -783,14 +783,14 @@ function render() {
     phase.tasks.forEach((task, ti) => {
       // inject divider between sub-sections
       if (phase.divider && ti === phase.divider) {
-        const div = document.createElement('div');
-        div.className = 'phase-divider';
-        div.innerHTML = `
+        const sep = document.createElement('div');
+        sep.className = 'phase-divider';
+        sep.innerHTML = `
           <div class="phase-divider-line"></div>
           <div class="phase-divider-label">${phase.dividerLabel}</div>
           <div class="phase-divider-line"></div>
         `;
-        list.appendChild(div);
+        list.appendChild(sep);
       }
 
       const id = `${pi}-${ti}`;
