@@ -1,0 +1,106 @@
+name: Daily Moving Countdown Text
+
+on:
+  schedule:
+    - cron: '0 14 * * *'  # 10:00 AM EDT (UTC-4)
+  workflow_dispatch:       # run manually anytime from the Actions tab
+
+jobs:
+  send-text:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send countdown text to both phones
+        env:
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_AUTH_TOKEN:  ${{ secrets.TWILIO_AUTH_TOKEN }}
+          TWILIO_FROM_NUM:    ${{ secrets.TWILIO_FROM_NUM }}
+          TWILIO_TO_NUMS:     ${{ secrets.TWILIO_TO_NUMS }}
+        run: |
+          python3 << 'EOF'
+          import urllib.request, urllib.parse, base64, os
+          from datetime import date
+
+          ACCOUNT_SID = os.environ["TWILIO_ACCOUNT_SID"]
+          AUTH_TOKEN  = os.environ["TWILIO_AUTH_TOKEN"]
+          FROM_NUM    = os.environ["TWILIO_FROM_NUM"]
+          TO_NUMS     = os.environ["TWILIO_TO_NUMS"].split(",")
+
+          today    = date.today()
+          move_out = date(2025, 6, 15)
+          move_in  = date(2025, 6, 22)
+
+          days_to_out = (move_out - today).days
+          days_to_in  = (move_in  - today).days
+
+          if today < move_out:
+              d = days_to_out
+              if d > 30:
+                  msg = (f"📦 {d} days until June 15 move-out. "
+                         "Plenty of time! ...but maybe start that one junk drawer.")
+              elif d > 21:
+                  msg = (f"📦 {d} days to move-out. "
+                         "The boxes aren't going to pack themselves. (We checked.)")
+              elif d > 14:
+                  msg = (f"😬 {d} days until June 15. "
+                         "Stop pretending this isn't happening and start wrapping dishes.")
+              elif d == 14:
+                  msg = ("📅 TWO WEEKS. 14 days to move-out. "
+                         "This is the part where things get real. Deep breath. Then pack.")
+              elif d > 7:
+                  msg = (f"🚨 {d} days to move-out. "
+                         "POD ordered? ✓ Housing booked? ✓ Mildly panicking? ✓ Good.")
+              elif d == 7:
+                  msg = ("🗓️ ONE WEEK. 7 days. "
+                         "If it's not packed it's getting donated. We don't make the rules.")
+              elif d > 3:
+                  msg = (f"🔥 {d} DAYS LEFT. "
+                         "The POD should be filling up. Every box you pack = one less crisis on moving day.")
+              elif d == 3:
+                  msg = ("⏰ 3 days. Finish packing. Defrost the fridge. "
+                         "Find the passports. You've got this (no you're fine).")
+              elif d == 2:
+                  msg = ("😰 2 days to move-out. "
+                         "Get some sleep tonight. Tomorrow is your last full day. Lock the POD!")
+              elif d == 1:
+                  msg = ("🚨 TOMORROW IS MOVE-OUT DAY. "
+                         "Set 3 alarms. Eat breakfast. Hand over those keys like the champs you are.")
+              else:
+                  msg = ("🚛 TODAY IS JUNE 15 — MOVE OUT DAY!! "
+                         "Keys out by end of day. New chapter loading... GO GO GO!!")
+
+          elif today < move_in:
+              gap_day = (today - move_out).days + 1
+              d = days_to_in
+              if d > 1:
+                  msg = (f"🏕️ Homeless life: day {gap_day} of 7. "
+                         f"{d} days until keys to the new place. "
+                         "Hotel breakfast + no chores isn't the worst thing tbh.")
+              elif d == 1:
+                  msg = ("🔑 TOMORROW IS MOVE-IN DAY!! "
+                         "Almost there. Get a good night's sleep — tomorrow's a big one!!")
+              else:
+                  msg = ("🏡 TODAY IS JUNE 22 — MOVE-IN DAY!! "
+                         "Go get those keys!! New home, new chapter, same legendary family. "
+                         "LET'S GOOO 🎉🎉🎉")
+
+          else:
+              d = (today - move_in).days
+              msg = (f"🏡 You've been in the new house for {d} day{'s' if d != 1 else ''}! "
+                     "Hope it's starting to feel like home 🎉 "
+                     "(Reminder: change the locks if you haven't already!)")
+
+          url = (f"https://api.twilio.com/2010-04-01/Accounts/"
+                 f"{ACCOUNT_SID}/Messages.json")
+          creds = base64.b64encode(f"{ACCOUNT_SID}:{AUTH_TOKEN}".encode()).decode()
+
+          for num in TO_NUMS:
+              data = urllib.parse.urlencode({
+                  "To": num, "From": FROM_NUM, "Body": msg
+              }).encode()
+              req = urllib.request.Request(url, data=data)
+              req.add_header("Authorization", f"Basic {creds}")
+              with urllib.request.urlopen(req) as resp:
+                  print(f"✓ Sent to {num} — HTTP {resp.status}")
+
+          print(f"\nMessage:\n{msg}")
+          EOF
