@@ -26,8 +26,8 @@ jobs:
           TO_NUMS     = os.environ["TWILIO_TO_NUMS"].split(",")
 
           today    = date.today()
-          move_out = date(2025, 6, 15)
-          move_in  = date(2025, 6, 22)
+          move_out = date(2026, 6, 15)
+          move_in  = date(2026, 6, 22)
 
           days_to_out = (move_out - today).days
           days_to_in  = (move_in  - today).days
