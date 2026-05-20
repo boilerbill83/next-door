@@ -26,8 +26,9 @@ jobs:
           TO_NUMS     = os.environ["TWILIO_TO_NUMS"].split(",")
 
           today    = date.today()
-          move_out = date(2026, 6, 15)
-          move_in  = date(2026, 6, 22)
+          move_out = date(2026, 6, 14)
+          move_in  = date(2026, 6, 23)
+          pine_bluff_access = date(2026, 6, 22)
 
           days_to_out = (move_out - today).days
           days_to_in  = (move_in  - today).days
@@ -82,47 +83,58 @@ jobs:
                          "Last full day tomorrow. Lock the POD. Get some sleep. You're almost through it.")
               elif d == 1:
                   msg = ("🚨 TOMORROW IS MOVE-OUT DAY. Set 3 alarms. Eat a real breakfast. "
-                         "Hand over those keys like the legends you are. June 22 is only 8 days away! 💪")
+                         "Hand over those keys like the legends you are. Pine Bluff is only 9 days away! 💪")
               else:
-                  msg = ("🚛 TODAY IS JUNE 15 — MOVE-OUT DAY!! "
-                         "Hand over the keys. Lock the POD. You did it. "
-                         "Next stop: YOUR NEW HOME in 7 days. GO GO GO!!")
+                  msg = ("🚛 TODAY IS JUNE 14 — MOVE-OUT DAY!! "
+                         "Hand over the keys at 8038 Springwater. Lock the POD. You did it. "
+                         "Temp housing awaits — next stop: Pine Bluff in 9 days. GO GO GO!!")
 
           elif today < move_in:
               gap_day = (today - move_out).days + 1
               d = days_to_in
               gap_msgs = {
-                  1: ("🏚️ Day 1 of 7: officially, temporarily, intentionally homeless. "
-                      "Keys handed over like a boss. Hotel life begins. "
-                      "June 22 is 7 days away — the countdown is ON. 🔑"),
+                  1: ("🏚️ Day 1 of 9: officially, temporarily, intentionally homeless. "
+                      "Keys handed over like a boss. Springwater is someone else's now. "
+                      "Pine Bluff is 9 days away — the countdown is ON. 🔑"),
                   2: ("🛎️ Homeless life, day 2. "
                       "Breakfast buffet hits different when it's not your kitchen. "
-                      "6 days until you get your new front door. Hang tight!"),
+                      "8 days until Pine Bluff. Enjoy the weirdness — it's a story you'll tell forever!"),
                   3: ("🧳 Day 3 of the great nomad era. "
-                      "You're basically explorers now. Brave ones. "
-                      "5 days until June 22 — the new house is just sitting there, waiting for you. 🏡"),
-                  4: ("📦 Day 4! More than halfway through the gap. "
-                      "The POD is packed, the new house is ready, and you're nearly there. "
-                      "4 more days. Start getting excited!! 🎉"),
-                  5: ("🔥 Day 5 — only 3 more sleeps!! "
-                      "Think about where the couch goes. Think about that first meal in the new kitchen. "
-                      "It's almost time. June 22 is SO CLOSE. 🏠"),
-                  6: ("✨ Day 6. TWO MORE SLEEPS. "
-                      "Tomorrow is move-in eve. The night before the keys. "
-                      "Get excited — like, genuinely, this-is-happening excited. 🔑🏡"),
-                  7: ("🎊 Day 7 — TOMORROW IS JUNE 22!! "
-                      "Move-in day is HERE. Get a great night's sleep. "
-                      "Tomorrow you walk into YOUR new home for the first time as owners. "
-                      "IT'S HAPPENING!! 🏡🎉🔑"),
+                      "You're basically explorers now. Brave ones with a POD full of memories. "
+                      "7 more days — Pine Bluff is just sitting there, waiting for you. 🏡"),
+                  4: ("📦 Day 4! Getting through it. "
+                      "Think about where the furniture goes. Think about that first dinner in the new kitchen. "
+                      "6 more days. The dream is almost real. 🎉"),
+                  5: ("🏕️ Day 5 — halfway through the gap!! "
+                      "You're doing great. Temp housing is just a comma in this story, not the ending. "
+                      "5 more days to Pine Bluff. Keep the vision alive. 🏠"),
+                  6: ("✨ Day 6. Getting close now! "
+                      "Tomorrow you hit one week in temp housing — that's impressive. "
+                      "4 more days. Pine Bluff is calling your name. 🔑"),
+                  7: ("🔥 Day 7 — only 2 more sleeps until access!! "
+                      "June 22 is tomorrow: you get KEYS TO PINE BLUFF for deep-cleaning day. "
+                      "Then June 23 — movers and POD arrive and it's HOME TIME. SO. CLOSE. 🏡"),
+                  8: ("🧹 Day 8 — TOMORROW IS JUNE 22!! "
+                      "Pine Bluff access day is HERE. Get a good night's sleep. "
+                      "Tomorrow you walk through YOUR new home for the first time as owners, mops in hand. "
+                      "Clean it up — the movers come June 23!! 🏡🎉🔑"),
+                  9: ("✨ Day 9 — ACCESS DAY! Welcome to 10878 Pine Bluff Dr!! "
+                      "Today you get the keys and deep-clean your forever home. "
+                      "Tomorrow the POD and movers arrive and it all becomes real. "
+                      "Scrub, explore, celebrate — you EARNED this! 🧹🏡🎊"),
               }
               msg = gap_msgs.get(gap_day,
-                  f"🏕️ Homeless life, day {gap_day}. {d} days to go. Almost there!")
+                  f"🏕️ Homeless life, day {gap_day}. {d} days to Pine Bluff. Almost there!")
+
+              if today == pine_bluff_access and gap_day == 9:
+                  msg = gap_msgs[9]
 
               if d == 0:
-                  msg = ("🏡🎉 TODAY IS JUNE 22 — MOVE-IN DAY!!! "
-                         "Go. Get. Those. Keys. "
+                  msg = ("🏡🎉 TODAY IS JUNE 23 — MOVE-IN DAY AT PINE BLUFF!!! "
+                         "Go. Get. That. House. 10878 Pine Bluff Dr is YOURS. "
+                         "POD's here, movers are coming, and it's finally, officially, gloriously HOME. "
                          "New address. New chapter. New memories. Same legendary family. "
-                         "We are SO proud of you — LET'S GOOOOO!! 🔑🎊🏠🎉")
+                         "LET'S GOOOOO!! 🔑🎊🏠🎉")
 
           else:
               d = (today - move_in).days
