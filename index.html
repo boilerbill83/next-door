@@ -548,24 +548,19 @@ footer {
     </div>
     <div class="hero-right">
       <div class="date-card">
-        <div class="date-card-label">Movers arrive</div>
-        <div class="date-card-value">June 12</div>
-        <div class="date-card-sub">POD + movers at Springwater</div>
+        <div class="date-card-label">Closing day</div>
+        <div class="date-card-value">June 15</div>
+        <div class="date-card-sub">Sell Springwater (stay put)</div>
       </div>
       <div class="date-card">
-        <div class="date-card-label">We're out</div>
-        <div class="date-card-value">June 14</div>
-        <div class="date-card-sub">8038 Springwater Dr W</div>
+        <div class="date-card-label">Move day 🚛</div>
+        <div class="date-card-value">June 22</div>
+        <div class="date-card-sub">Movers → Pine Bluff Dr 🏡</div>
       </div>
       <div class="date-card">
-        <div class="date-card-label">We're in</div>
+        <div class="date-card-label">Out by noon ⏰</div>
         <div class="date-card-value">June 23</div>
-        <div class="date-card-sub">10878 Pine Bluff Dr 🏡</div>
-      </div>
-      <div class="date-card">
-        <div class="date-card-label">The gap</div>
-        <div class="date-card-value">9 days 😅</div>
-        <div class="date-card-sub">Temporarily homeless</div>
+        <div class="date-card-sub">Final vacate Springwater</div>
       </div>
     </div>
   </div>
@@ -596,116 +591,99 @@ footer {
 // cost: 0=free 1=$ 2=$$ 3=$$$
 const phases = [
   {
-    num:"01", label:"Now → June 11", sub:"Pre-move", color:"#7c3aed",
+    num:"01", label:"Now → June 14", sub:"Pre-move prep", color:"#7c3aed",
     divider: 7,
     dividerLabel: "After Memorial Day — May 26 →",
     tasks:[
       // ── Before Memorial Day — do NOW ──
-      {t:"Confirm possession/closing dates in writing with both agents",   n:"Move out 6/14 (Springwater), move in 6/23 (Pine Bluff)",  i:"high",     time:"30m",          cost:0},
-      {t:"Book movers — June 12 load at Springwater, June 23 unload at Pine Bluff", n:"⚠️ Still needs to be decided — do this ASAP", i:"critical", time:"1h", cost:3, u:true},
-      {t:"Order POD — delivery to 8038 Springwater Dr W for June 12",     n:"Book now; lead time is usually several days",             i:"critical", time:"30m",          cost:3, u:true},
-      {t:"Arrange temporary housing for 6/14–6/22",                       n:"⚠️ Still needs to be decided — hotel, family, or Airbnb", i:"critical", time:"1h",           cost:3, u:true},
-      {t:"Set up utilities at Pine Bluff starting 6/23",                  n:"Electric, gas, water, internet — 10878 Pine Bluff Dr 46037", i:"critical", time:"1h",        cost:1, u:true},
-      {t:"Sort and declutter — donate, sell, or toss before packing",     n:"Saves time and money on the move",                       i:"high",     time:"2–3 days",     cost:0},
-      {t:"Buy packing supplies",                                          n:"Boxes, tape, bubble wrap, furniture pads, markers",      i:"high",     time:"1h",           cost:2},
+      {t:"Confirm post-possession details in writing with your agent",    n:"You sell June 15 but stay until June 23 noon — get this in the contract", i:"critical", time:"30m", cost:0, u:true},
+      {t:"Book movers — June 22 at 8038 Springwater Dr W, same day to Pine Bluff", n:"⚠️ Still needs to be decided — book ASAP",             i:"critical", time:"1h",           cost:3, u:true},
+      {t:"Set up utilities at Pine Bluff starting June 22",              n:"Electric, gas, water, internet — 10878 Pine Bluff Dr 46037",  i:"critical", time:"1h",           cost:1, u:true},
+      {t:"Sort and declutter — donate, sell, or toss before packing",    n:"Saves time and money on the move",                            i:"high",     time:"2–3 days",     cost:0},
+      {t:"Buy packing supplies",                                         n:"Boxes, tape, bubble wrap, furniture pads, markers",           i:"high",     time:"1h",           cost:2},
+      {t:"Gather important documents",                                   n:"IDs, closing docs, insurance, passports, medical",            i:"critical", time:"30m",          cost:0},
+      {t:"Photograph all valuables for insurance records",               n:"",                                                            i:"high",     time:"1h",           cost:0},
       // ── After Memorial Day ──
-      {t:"Check if city or HOA requires a street permit for the POD",     n:"8038 Springwater — may need a few days to process",       i:"high",     time:"1h",           cost:1},
-      {t:"Confirm accessible drop spot for POD at Springwater",           n:"Driveway preferred; street requires permit",              i:"medium",   time:"15m",          cost:0},
-      {t:"Confirm utilities shutoff at Springwater for 6/14",             n:"",                                                       i:"high",     time:"30m",          cost:0},
-      {t:"Forward mail via USPS",                                         n:"usps.com — change to 10878 Pine Bluff Dr 46037",          i:"high",     time:"15m",          cost:0},
-      {t:"Notify employer HR of new address (for tax/payroll)",           n:"",                                                       i:"medium",   time:"15m",          cost:0},
-      {t:"Update address with bank and credit card companies",            n:"",                                                       i:"high",     time:"1h",           cost:0},
-      {t:"Update address with insurance providers",                       n:"Home, auto, health, life",                               i:"high",     time:"1h",           cost:0},
-      {t:"Notify subscriptions and online accounts of new address",       n:"Amazon, Apple ID, Google, etc.",                        i:"medium",   time:"1h",           cost:0},
-      {t:"Transfer or cancel local services at Springwater",              n:"Lawn care, cleaning, trash, alarm monitoring",           i:"medium",   time:"1h",           cost:0},
-      {t:"Pack non-essentials and label all boxes by room",               n:"",                                                       i:"high",     time:"several days", cost:0},
-      {t:"Pack an essentials bag — keep it with you, not in the POD",    n:"Toiletries, meds, chargers, docs, a few days of clothes", i:"critical", time:"1h",           cost:0},
-      {t:"Photograph all valuables for insurance records",                n:"",                                                       i:"high",     time:"1h",           cost:0},
-      {t:"Gather important documents",                                    n:"IDs, closing docs, insurance, passports, medical",       i:"critical", time:"30m",          cost:0},
-      {t:"Clean out and defrost fridge/freezer",                          n:"Do this a day or two before June 12",                    i:"high",     time:"2h",           cost:0},
-      {t:"Disassemble large furniture that won't fit assembled",          n:"",                                                       i:"medium",   time:"2–3h",         cost:0},
-      {t:"Return borrowed items; collect items you've lent out",          n:"",                                                       i:"low",      time:"varies",       cost:0},
+      {t:"Forward mail via USPS",                                        n:"usps.com — change to 10878 Pine Bluff Dr 46037",               i:"high",     time:"15m",          cost:0},
+      {t:"Notify employer HR of new address (for tax/payroll)",          n:"",                                                            i:"medium",   time:"15m",          cost:0},
+      {t:"Update address with bank and credit card companies",           n:"",                                                            i:"high",     time:"1h",           cost:0},
+      {t:"Update address with insurance providers",                      n:"Home, auto, health, life",                                    i:"high",     time:"1h",           cost:0},
+      {t:"Notify subscriptions and online accounts of new address",      n:"Amazon, Apple ID, Google, etc.",                             i:"medium",   time:"1h",           cost:0},
+      {t:"Transfer or cancel local services at Springwater",             n:"Lawn care, cleaning, trash, alarm monitoring",                i:"medium",   time:"1h",           cost:0},
+      {t:"Pack non-essentials and label all boxes by room",              n:"",                                                            i:"high",     time:"several days", cost:0},
+      {t:"Pack an essentials bag — keep it with you, not on the truck", n:"Toiletries, meds, chargers, docs, a few days of clothes",     i:"critical", time:"1h",           cost:0},
+      {t:"Disassemble large furniture that won't fit assembled",         n:"",                                                            i:"medium",   time:"2–3h",         cost:0},
+      {t:"Return borrowed items; collect items you've lent out",         n:"",                                                            i:"low",      time:"varies",       cost:0},
     ]
   },
   {
-    num:"02", label:"June 12 — Loading Day", sub:"POD + movers at Springwater", color:"#c2410c",
+    num:"02", label:"June 15 — Closing Day", sub:"You sold your house! (but you stay 🏠)", color:"#c2410c",
     tasks:[
-      {t:"Be home when POD arrives — confirm placement at Springwater",   n:"Driveway preferred; have permit ready if street drop",    i:"critical", time:"30m",          cost:0, u:true},
-      {t:"Movers arrive — oversee loading of POD and/or truck",           n:"Direct where things go; protect floors and walls",       i:"critical", time:"full day",     cost:3, u:true},
-      {t:"Pack the POD strategically",                                    n:"Heaviest items on floor against front wall; pads on furniture", i:"high", time:"full day",  cost:0},
-      {t:"Lock the POD at the end of the day",                            n:"",                                                       i:"high",     time:"5m",           cost:0},
-      {t:"Do a walkthrough — confirm nothing essential left behind",      n:"Attic, garage, shed, basement, under decks",              i:"high",     time:"1h",           cost:0},
+      {t:"Sign all closing documents",                                   n:"Coordinate with real estate attorney/agent",                  i:"critical", time:"2h",           cost:0},
+      {t:"Confirm post-possession agreement is in place",                n:"You stay at Springwater until June 23 noon — verify in writing", i:"critical", time:"30m",      cost:0},
+      {t:"Confirm Pine Bluff closing and access on track for June 22",  n:"Watch for last-minute conditions or delays",                  i:"critical", time:"30m",          cost:0},
+      {t:"Celebrate — you just sold your house! 🥂",                    n:"Go out to dinner. You earned it.",                            i:"high",     time:"evening",      cost:2},
     ]
   },
   {
-    num:"03", label:"June 13–14 — Move Out", sub:"Last days at 8038 Springwater Dr W 46256", color:"#be185d",
+    num:"03", label:"June 16–21 — Packing Week", sub:"Still at Springwater — final push", color:"#1d4ed8",
     tasks:[
-      {t:"Finish any remaining packing and loading",                      n:"",                                                       i:"critical", time:"half day",     cost:0},
-      {t:"Do final room-by-room sweep",                                   n:"Every closet, cabinet, garage, shed, basement",          i:"critical", time:"1h",           cost:0},
-      {t:"Leave house in the condition required by the contract",         n:"",                                                       i:"critical", time:"2–3h",         cost:1},
-      {t:"Take photos of every room as you leave",                        n:"Protects you from any disputes later",                   i:"high",     time:"30m",          cost:0},
-      {t:"Hand over all keys, fobs, garage remotes, mailbox keys",       n:"",                                                       i:"critical", time:"15m",          cost:0},
-      {t:"Confirm closing documents are signed and funds disbursed",      n:"Coordinate with your real estate lawyer/agent",          i:"critical", time:"30m",          cost:0},
-      {t:"Confirm POD is locked and storage/transit is arranged",         n:"",                                                       i:"high",     time:"15m",          cost:0},
-      {t:"Check into temporary housing",                                  n:"Have address and check-in details ready",                i:"critical", time:"1h",           cost:3, u:true},
+      {t:"Finish packing and labeling every room",                       n:"The goal: everything in a box except essentials",             i:"critical", time:"several days", cost:0},
+      {t:"Confirm movers for June 22 — time, truck size, access info",  n:"",                                                            i:"critical", time:"30m",          cost:0},
+      {t:"Confirm utility activation at Pine Bluff for June 22",        n:"Electric, gas, water, internet",                              i:"critical", time:"15m",          cost:0},
+      {t:"Buy deep cleaning supplies for Pine Bluff",                   n:"Mop, bucket, all-purpose cleaner, scrubbers, gloves",         i:"high",     time:"1h",           cost:1},
+      {t:"Clean out and defrost fridge/freezer",                        n:"Do this June 20 or 21 so it's ready for the movers",          i:"high",     time:"2h",           cost:0},
+      {t:"Know where your essentials bag is at all times",              n:"This stays in your car, not on the truck",                    i:"high",     time:"5m",           cost:0},
+      {t:"Change or rekey locks at Pine Bluff (schedule for move day)", n:"Previous owners may still have copies",                       i:"critical", time:"2h",           cost:2, u:true},
     ]
   },
   {
-    num:"04", label:"June 14–21 — The Gap", sub:"Temporarily homeless 😅 (9 days)", color:"#1d4ed8",
+    num:"04", label:"June 22 — MOVE DAY!! 🚛", sub:"Movers at Springwater → Pine Bluff", color:"#065f46",
     tasks:[
-      {t:"Settle into temporary housing",                                 n:"",                                                       i:"critical", time:"9 days",       cost:3},
-      {t:"Confirm June 22 access to 10878 Pine Bluff Dr with agent",     n:"Watch for any delays or last-minute conditions",         i:"critical", time:"30m",          cost:0},
-      {t:"Buy deep cleaning supplies for Pine Bluff",                    n:"Mop, bucket, all-purpose cleaner, scrubbers, gloves",    i:"high",     time:"1h",           cost:1},
-      {t:"Confirm POD delivery to Pine Bluff for June 23",               n:"Coordinate with POD company",                           i:"critical", time:"15m",          cost:0},
-      {t:"Confirm movers for June 23 unload at Pine Bluff",              n:"",                                                       i:"critical", time:"15m",          cost:0},
-      {t:"Confirm utility activation at Pine Bluff for 6/23",            n:"Electric, gas, water, internet",                        i:"critical", time:"15m",          cost:0},
-      {t:"Know where your essentials bag is — it stays with you",        n:"Not in the POD",                                        i:"high",     time:"5m",           cost:0},
+      {t:"Movers arrive at 8038 Springwater Dr W — oversee loading",    n:"Direct where things go; protect floors and walls",            i:"critical", time:"full day",     cost:3, u:true},
+      {t:"Do a full sweep at Springwater before the truck leaves",      n:"Every closet, cabinet, attic, garage, shed",                  i:"critical", time:"1h",           cost:0},
+      {t:"Take photos of every room at Springwater before you leave",   n:"Protects you from any disputes later",                        i:"high",     time:"30m",          cost:0},
+      {t:"Movers unload at 10878 Pine Bluff Dr 46037",                  n:"Use box labels to direct traffic into the right rooms",       i:"critical", time:"full day",     cost:3, u:true},
+      {t:"Get keys to Pine Bluff 🔑",                                   n:"Confirm access time with your agent",                         i:"critical", time:"30m",          cost:0},
+      {t:"Walk through Pine Bluff and photograph any existing issues",  n:"Before you touch anything — protects you legally",            i:"critical", time:"1h",           cost:0},
+      {t:"Check all utilities are live: electric, gas, water, internet",n:"",                                                            i:"critical", time:"30m",          cost:0},
+      {t:"Locate main water shutoff, electrical panel, and gas shutoff",n:"",                                                            i:"high",     time:"30m",          cost:0},
+      {t:"Test smoke detectors and carbon monoxide detectors",          n:"Replace batteries if needed",                                 i:"high",     time:"30m",          cost:1},
+      {t:"Set up beds first — you're sleeping here tonight",            n:"Everything else can wait; this can't",                        i:"high",     time:"1h",           cost:0},
+      {t:"Celebrate!! 🥂",                                              n:"You just moved into your new home. That's a very big deal.",  i:"critical", time:"all night",    cost:2},
     ]
   },
   {
-    num:"05", label:"June 22 — Pine Bluff Access", sub:"Deep clean day 🧹", color:"#0891b2",
+    num:"05", label:"June 23 — Out by Noon ⏰", sub:"Final vacate 8038 Springwater Dr W 46256", color:"#be185d",
     tasks:[
-      {t:"Get access to 10878 Pine Bluff Dr 46037",                      n:"Confirm time with agent",                                i:"critical", time:"30m",          cost:0, u:true},
-      {t:"Walk through every room and photograph any existing damage",    n:"Before you touch anything — protects you legally",       i:"critical", time:"1h",           cost:0},
-      {t:"Deep clean the entire house",                                   n:"Floors, bathrooms, kitchen, windows, baseboards",       i:"high",     time:"full day",     cost:1},
-      {t:"Check all utilities are live: electric, gas, water, internet", n:"",                                                       i:"critical", time:"30m",          cost:0},
-      {t:"Locate main water shutoff, electrical panel, and gas shutoff", n:"",                                                       i:"high",     time:"30m",          cost:0},
-      {t:"Change or rekey all locks",                                     n:"Previous owners may still have copies",                  i:"critical", time:"2h",           cost:2, u:true},
-      {t:"Test smoke detectors and carbon monoxide detectors",            n:"Replace batteries if needed",                           i:"high",     time:"30m",          cost:1},
-      {t:"Confirm POD drop spot and movers are set for tomorrow",        n:"Driveway preferred; check HOA rules for Pine Bluff",     i:"high",     time:"15m",          cost:0},
+      {t:"Final room-by-room sweep at Springwater",                     n:"Every closet, cabinet, garage, basement — check it all",      i:"critical", time:"1h",           cost:0},
+      {t:"Leave house in the condition required by the contract",       n:"",                                                            i:"critical", time:"2–3h",         cost:1},
+      {t:"Photograph every room as you leave",                          n:"Timestamp everything — protects you from disputes",           i:"critical", time:"30m",          cost:0},
+      {t:"Confirm utilities are shut off at Springwater",              n:"",                                                            i:"high",     time:"15m",          cost:0},
+      {t:"Hand over all keys, fobs, garage remotes, mailbox keys",    n:"BE OUT BY NOON — don't cut it close",                         i:"critical", time:"15m",          cost:0, u:true},
+      {t:"Confirm funds disbursed with your agent/attorney",           n:"",                                                            i:"critical", time:"30m",          cost:0},
     ]
   },
   {
-    num:"06", label:"June 23 — Move In!! 🎉", sub:"POD + movers at Pine Bluff Dr", color:"#065f46",
+    num:"06", label:"June 23+ — Settle In 🏡", sub:"10878 Pine Bluff Dr 46037", color:"#92400e",
     tasks:[
-      {t:"POD arrives — confirm placement at 10878 Pine Bluff Dr",       n:"",                                                       i:"critical", time:"30m",          cost:0, u:true},
-      {t:"Movers arrive — supervise unloading into correct rooms",       n:"Use box labels to direct traffic",                      i:"critical", time:"full day",     cost:3, u:true},
-      {t:"Set up essentials first: beds, bathroom, kitchen basics",      n:"Everything else can wait — these can't",                i:"high",     time:"2h",           cost:0},
-      {t:"Make sure essentials bag is unpacked and accessible",          n:"",                                                       i:"high",     time:"15m",          cost:0},
-      {t:"Schedule POD pickup once fully unloaded",                      n:"Don't pay for extra days you don't need",                i:"medium",   time:"15m",          cost:0},
-      {t:"Celebrate!! 🥂",                                               n:"You just moved into your new home. That's a big deal.",  i:"critical", time:"all night",    cost:2},
-    ]
-  },
-  {
-    num:"07", label:"June 24 onward — Settle In", sub:"Post-move", color:"#92400e",
-    tasks:[
-      {t:"Update driver's license with new address",                     n:"Usually required within 30–60 days by state law",        i:"high",     time:"2h",           cost:1},
-      {t:"Update vehicle registration with new address",                 n:"",                                                       i:"high",     time:"1h",           cost:1},
-      {t:"Register to vote at new address (Hamilton County)",            n:"",                                                       i:"medium",   time:"15m",          cost:0},
-      {t:"Notify kids' schools or update enrollment if needed",          n:"",                                                       i:"high",     time:"30m",          cost:0},
-      {t:"Transfer medical providers or notify of new address",          n:"",                                                       i:"medium",   time:"1h",           cost:0},
-      {t:"Update address with Social Security if applicable",            n:"",                                                       i:"medium",   time:"30m",          cost:0},
-      {t:"Find nearest hospital, urgent care, and pharmacy",             n:"Noblesville/Fishers area",                               i:"high",     time:"15m",          cost:0},
-      {t:"Get to know HOA rules at Pine Bluff",                          n:"Trash days, parking, mailbox rules",                    i:"medium",   time:"30m",          cost:0},
-      {t:"Schedule any inspections or repairs identified at closing",    n:"",                                                       i:"high",     time:"1h",           cost:0},
-      {t:"Unpack systematically — kitchen and bedrooms first",           n:"",                                                       i:"high",     time:"several days", cost:0},
-      {t:"Break down boxes and dispose of packing materials",            n:"",                                                       i:"low",      time:"1h",           cost:0},
+      {t:"Unpack systematically — kitchen and bedrooms first",          n:"",                                                            i:"high",     time:"several days", cost:0},
+      {t:"Update driver's license with new address",                    n:"Usually required within 30–60 days by state law",             i:"high",     time:"2h",           cost:1},
+      {t:"Update vehicle registration with new address",                n:"",                                                            i:"high",     time:"1h",           cost:1},
+      {t:"Register to vote at new address (Hamilton County)",           n:"",                                                            i:"medium",   time:"15m",          cost:0},
+      {t:"Notify kids' schools or update enrollment if needed",         n:"",                                                            i:"high",     time:"30m",          cost:0},
+      {t:"Transfer medical providers or notify of new address",         n:"",                                                            i:"medium",   time:"1h",           cost:0},
+      {t:"Update address with Social Security if applicable",           n:"",                                                            i:"medium",   time:"30m",          cost:0},
+      {t:"Find nearest hospital, urgent care, and pharmacy",            n:"Noblesville/Fishers area",                                    i:"high",     time:"15m",          cost:0},
+      {t:"Get to know HOA rules at Pine Bluff",                         n:"Trash days, parking, mailbox rules",                          i:"medium",   time:"30m",          cost:0},
+      {t:"Schedule any inspections or repairs identified at closing",   n:"",                                                            i:"high",     time:"1h",           cost:0},
+      {t:"Break down boxes and dispose of packing materials",           n:"",                                                            i:"low",      time:"1h",           cost:0},
     ]
   }
 ];
 
 // ── STATE ──
-const KEY = 'moving-2026-v2';
+const KEY = 'moving-2026-v3';
 let state = JSON.parse(localStorage.getItem(KEY) || '{}');
 function save() { localStorage.setItem(KEY, JSON.stringify(state)); }
 

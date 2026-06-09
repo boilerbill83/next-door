@@ -25,123 +25,83 @@ jobs:
           FROM_NUM    = os.environ["TWILIO_FROM_NUM"]
           TO_NUMS     = os.environ["TWILIO_TO_NUMS"].split(",")
 
-          today    = date.today()
-          move_out = date(2026, 6, 14)
-          move_in  = date(2026, 6, 23)
-          pine_bluff_access = date(2026, 6, 22)
+          today     = date.today()
+          move_day  = date(2026, 6, 22)   # movers arrive, move into Pine Bluff
+          final_out = date(2026, 6, 23)   # out of Springwater by noon
 
-          days_to_out = (move_out - today).days
-          days_to_in  = (move_in  - today).days
+          days_to_move = (move_day - today).days
 
           # multiple options per tier — rotate by day of year so it's fresh each time
           def pick(options):
               return options[today.toordinal() % len(options)]
 
-          if today < move_out:
-              d = days_to_out
+          if today < move_day:
+              d = days_to_move
               if d > 30:
                   msg = pick([
-                      f"📦 {d} days until June 15 move-out. Plenty of runway! ...but maybe tackle that one junk drawer.",
-                      f"🏠 {d} days to go. The new house is out there waiting. It doesn't know how lucky it is.",
-                      f"📋 {d} days until move-out. Future you will be SO grateful present you started packing early.",
+                      f"📦 {d} days until move day (June 22). Plenty of runway! ...but maybe tackle that one junk drawer.",
+                      f"🏠 {d} days to go. Pine Bluff is out there waiting. It doesn't know how lucky it is.",
+                      f"📋 {d} days until move day. Future you will be SO grateful present you started packing early.",
                   ])
               elif d > 21:
                   msg = pick([
-                      f"📦 {d} days to move-out. The boxes aren't going to pack themselves. (We checked.)",
+                      f"📦 {d} days to move day. The boxes aren't going to pack themselves. (We checked.)",
                       f"🛻 {d} days left. Start with the stuff you never use. You know the room.",
                       f"📦 {d} days. Donate pile. Trash pile. Keep pile. Go.",
                   ])
               elif d > 14:
                   msg = pick([
-                      f"😬 {d} days until June 15. Time to stop pretending this isn't happening.",
-                      f"⏳ {d} days. Every box you pack today is one less panic on moving day.",
-                      f"📅 {d} days out. The POD should be filling up. How's it looking in there?",
+                      f"😬 {d} days until June 22. Time to stop pretending this isn't happening.",
+                      f"⏳ {d} days. Every box you pack today is one less panic on move day.",
+                      f"📅 {d} days out. Every drawer you clear now is a gift to future you.",
                   ])
               elif d == 14:
-                  msg = ("📅 TWO WEEKS. 14 days to move-out. "
-                         "This is the part where things get real. Deep breath. Then pack.")
+                  msg = ("📅 TWO WEEKS. 14 days to move day. "
+                         "You're still sleeping in your house — but it's time to pack like you're not.")
               elif d > 7:
                   msg = pick([
-                      f"🚨 {d} days to move-out. POD ordered ✓ Housing booked ✓ Mildly panicking ✓ Good.",
+                      f"🚨 {d} days to move day. Movers booked ✓ Utilities set ✓ Mildly panicking ✓ Good.",
                       f"⚡ {d} days. Pack like your future self is watching. (They are. They're grateful.)",
                       f"🔥 {d} days left. If it's not labeled it doesn't exist. Label everything.",
                   ])
               elif d == 7:
-                  msg = ("🗓️ ONE WEEK. 7 days. "
+                  msg = ("🗓️ ONE WEEK. 7 days until move day. "
                          "If it's not packed by now it's getting donated. We don't make the rules.")
               elif d > 3:
                   msg = pick([
-                      f"🔥 {d} DAYS. The POD better be nearly full. Every box now = one less crisis later.",
+                      f"🔥 {d} DAYS. Boxes everywhere is the vibe right now. Every box = one less crisis on June 22.",
                       f"😤 {d} days. Essentials bag packed? Documents gathered? Fridge defrosted? GO.",
-                      f"⏰ {d} days left. You're in the home stretch. Pack fast, label everything, breathe.",
+                      f"⏰ {d} days left. Home stretch. Pack fast, label everything, breathe.",
                   ])
               elif d == 3:
-                  msg = ("⏰ 3 days. Finish packing. Defrost the fridge. "
-                         "Find the passports. You've got this (you're fine, totally fine).")
+                  msg = ("⏰ 3 days to move day. Finish packing. Defrost the fridge. "
+                         "Find the passports. You've got this (you're fine, totally fine). "
+                         "June 22 is almost here — Pine Bluff is waiting. 🏡")
               elif d == 2:
-                  msg = ("😰 2 days to move-out. "
-                         "Last full day tomorrow. Lock the POD. Get some sleep. You're almost through it.")
+                  msg = ("😰 2 days to move day! Movers arrive June 22. "
+                         "Get that essentials bag ready. Get some sleep. You're almost through it.")
               elif d == 1:
-                  msg = ("🚨 TOMORROW IS MOVE-OUT DAY. Set 3 alarms. Eat a real breakfast. "
-                         "Hand over those keys like the legends you are. Pine Bluff is only 9 days away! 💪")
+                  msg = ("🚨 TOMORROW IS MOVE DAY!! Set 3 alarms. Eat a real breakfast. "
+                         "Movers arrive June 22 — by tonight you'll be sleeping at Pine Bluff. "
+                         "LET'S GO!! 💪🏡")
               else:
-                  msg = ("🚛 TODAY IS JUNE 14 — MOVE-OUT DAY!! "
-                         "Hand over the keys at 8038 Springwater. Lock the POD. You did it. "
-                         "Temp housing awaits — next stop: Pine Bluff in 9 days. GO GO GO!!")
+                  msg = ("🚛🏡 TODAY IS JUNE 22 — MOVE DAY!! "
+                         "Movers are coming. Load it up. Drive to Pine Bluff. Unload. "
+                         "By tonight, 10878 Pine Bluff Dr is HOME. "
+                         "YOU DID IT. GO GO GO!! 🔑🎉")
 
-          elif today < move_in:
-              gap_day = (today - move_out).days + 1
-              d = days_to_in
-              gap_msgs = {
-                  1: ("🏚️ Day 1 of 9: officially, temporarily, intentionally homeless. "
-                      "Keys handed over like a boss. Springwater is someone else's now. "
-                      "Pine Bluff is 9 days away — the countdown is ON. 🔑"),
-                  2: ("🛎️ Homeless life, day 2. "
-                      "Breakfast buffet hits different when it's not your kitchen. "
-                      "8 days until Pine Bluff. Enjoy the weirdness — it's a story you'll tell forever!"),
-                  3: ("🧳 Day 3 of the great nomad era. "
-                      "You're basically explorers now. Brave ones with a POD full of memories. "
-                      "7 more days — Pine Bluff is just sitting there, waiting for you. 🏡"),
-                  4: ("📦 Day 4! Getting through it. "
-                      "Think about where the furniture goes. Think about that first dinner in the new kitchen. "
-                      "6 more days. The dream is almost real. 🎉"),
-                  5: ("🏕️ Day 5 — halfway through the gap!! "
-                      "You're doing great. Temp housing is just a comma in this story, not the ending. "
-                      "5 more days to Pine Bluff. Keep the vision alive. 🏠"),
-                  6: ("✨ Day 6. Getting close now! "
-                      "Tomorrow you hit one week in temp housing — that's impressive. "
-                      "4 more days. Pine Bluff is calling your name. 🔑"),
-                  7: ("🔥 Day 7 — only 2 more sleeps until access!! "
-                      "June 22 is tomorrow: you get KEYS TO PINE BLUFF for deep-cleaning day. "
-                      "Then June 23 — movers and POD arrive and it's HOME TIME. SO. CLOSE. 🏡"),
-                  8: ("🧹 Day 8 — TOMORROW IS JUNE 22!! "
-                      "Pine Bluff access day is HERE. Get a good night's sleep. "
-                      "Tomorrow you walk through YOUR new home for the first time as owners, mops in hand. "
-                      "Clean it up — the movers come June 23!! 🏡🎉🔑"),
-                  9: ("✨ Day 9 — ACCESS DAY! Welcome to 10878 Pine Bluff Dr!! "
-                      "Today you get the keys and deep-clean your forever home. "
-                      "Tomorrow the POD and movers arrive and it all becomes real. "
-                      "Scrub, explore, celebrate — you EARNED this! 🧹🏡🎊"),
-              }
-              msg = gap_msgs.get(gap_day,
-                  f"🏕️ Homeless life, day {gap_day}. {d} days to Pine Bluff. Almost there!")
-
-              if today == pine_bluff_access and gap_day == 9:
-                  msg = gap_msgs[9]
-
-              if d == 0:
-                  msg = ("🏡🎉 TODAY IS JUNE 23 — MOVE-IN DAY AT PINE BLUFF!!! "
-                         "Go. Get. That. House. 10878 Pine Bluff Dr is YOURS. "
-                         "POD's here, movers are coming, and it's finally, officially, gloriously HOME. "
-                         "New address. New chapter. New memories. Same legendary family. "
-                         "LET'S GOOOOO!! 🔑🎊🏠🎉")
+          elif today == final_out:
+              msg = ("⏰ TODAY IS JUNE 23 — LAST DAY AT SPRINGWATER. OUT BY NOON!! "
+                     "Final sweep, final photos, hand over those keys. "
+                     "Then head HOME to Pine Bluff — you already live there now. 🏡"
+                     "Close the chapter. Start the next one. It's going to be amazing. 🎊")
 
           else:
-              d = (today - move_in).days
+              d = (today - final_out).days
               msg = pick([
-                  f"🏡 Day {d} in the new house! Hope it's starting to feel like yours 🎉",
-                  f"🏠 {d} days in! Every box you unpack makes it more home. Keep going!",
-                  f"✨ {d} days in the new place! Remember to change the locks if you haven't. And enjoy it — you earned this! 🎉",
+                  f"🏡 Day {d} at Pine Bluff! Hope it's starting to feel like home 🎉",
+                  f"🏠 {d} days in the new place! Every box you unpack makes it more yours. Keep going!",
+                  f"✨ {d} days at Pine Bluff! Remember to change the locks if you haven't. And enjoy it — you EARNED this! 🎉",
               ])
 
           url = (f"https://api.twilio.com/2010-04-01/Accounts/"
