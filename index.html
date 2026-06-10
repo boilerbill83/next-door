@@ -18,11 +18,11 @@
   --faint: #c4bece;
   --rule:  rgba(23,19,31,0.08);
 
-  --p1: #7c3aed;  /* violet   */
-  --p2: #c2410c;  /* burnt    */
-  --p3: #1d4ed8;  /* sapphire */
-  --p4: #065f46;  /* emerald  */
-  --p5: #92400e;  /* amber    */
+  --p1: #7c3aed;
+  --p2: #c2410c;
+  --p3: #1d4ed8;
+  --p4: #065f46;
+  --p5: #92400e;
 
   --must:   #e11d48;
   --high:   #ea580c;
@@ -41,9 +41,6 @@ body {
   min-height: 100vh;
 }
 
-/* ══════════════════════════════════
-   HERO
-══════════════════════════════════ */
 .hero {
   position: relative;
   height: 580px;
@@ -148,9 +145,6 @@ body {
   margin-top: 3px;
 }
 
-/* ══════════════════════════════════
-   STICKY PROGRESS
-══════════════════════════════════ */
 .progress-bar {
   position: sticky; top: 0; z-index: 200;
   height: 56px;
@@ -200,18 +194,12 @@ body {
   white-space: nowrap;
 }
 
-/* ══════════════════════════════════
-   MAIN
-══════════════════════════════════ */
 .main {
   max-width: 900px;
   margin: 0 auto;
   padding: 72px 24px 120px;
 }
 
-/* ══════════════════════════════════
-   PHASE
-══════════════════════════════════ */
 .phase { margin-bottom: 80px; }
 
 .phase-banner {
@@ -294,7 +282,6 @@ body {
   margin-top: 2px;
 }
 
-/* phase mini-bar */
 .phase-minibar {
   height: 3px;
   background: rgba(255,255,255,0.18);
@@ -310,9 +297,6 @@ body {
   transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
 }
 
-/* ══════════════════════════════════
-   TASKS
-══════════════════════════════════ */
 .task-list { display: flex; flex-direction: column; gap: 4px; }
 
 .task {
@@ -346,7 +330,6 @@ body {
 }
 .task.checked:hover { transform: none; box-shadow: none; }
 
-/* checkbox */
 .cb {
   width: 22px; height: 22px;
   border-radius: 6px;
@@ -370,7 +353,6 @@ body {
 }
 .task.checked .cb::after { transform: rotate(-45deg) translate(0,-1px) scale(1); }
 
-/* body */
 .task-body { flex: 1; min-width: 0; }
 
 .task-text {
@@ -401,8 +383,6 @@ body {
   50%      { box-shadow: 0 0 0 4px rgba(225,29,72,0); }
 }
 
-/* ── RIGHT META COLUMN ── */
-/* always-visible, right-side: priority dot · time · cost dots */
 .task-meta {
   display: flex;
   flex-direction: column;
@@ -442,9 +422,6 @@ body {
 .coin.on  { background: var(--mid); }
 .coin.off { background: var(--rule); }
 
-/* ══════════════════════════════════
-   CONFETTI
-══════════════════════════════════ */
 @keyframes fly {
   0%   { transform: scale(0) rotate(0deg) translateY(0); opacity: 1; }
   100% { transform: scale(1.1) rotate(580deg) translateY(-100px); opacity: 0; }
@@ -455,9 +432,6 @@ body {
   animation: fly 0.85s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
 }
 
-/* ══════════════════════════════════
-   DONE BANNER
-══════════════════════════════════ */
 .done-banner {
   text-align: center; padding: 72px 32px;
   margin-top: 56px; border-radius: 20px;
@@ -484,7 +458,6 @@ body {
   color: var(--mid); font-size: 16px;
 }
 
-/* ── PHASE SUB-DIVIDER ── */
 .phase-divider {
   display: flex;
   align-items: center;
@@ -508,9 +481,6 @@ body {
   border-radius: 20px;
 }
 
-/* ══════════════════════════════════
-   FOOTER
-══════════════════════════════════ */
 footer {
   text-align: center; padding: 32px;
   font-family: 'DM Mono', monospace;
@@ -519,9 +489,6 @@ footer {
   border-top: 1px solid var(--rule);
 }
 
-/* ══════════════════════════════════
-   RESPONSIVE
-══════════════════════════════════ */
 @media (max-width: 640px) {
   .hero { height: 520px; }
   .hero-content { grid-template-columns: 1fr; padding: 0 24px 36px; gap: 20px; }
@@ -587,23 +554,19 @@ footer {
 <footer>Made with love &nbsp;·&nbsp; June 2026</footer>
 
 <script>
-// ── DATA ──
-// cost: 0=free 1=$ 2=$$ 3=$$$
 const phases = [
   {
     num:"01", label:"Now → June 14", sub:"Pre-move prep", color:"#7c3aed",
     divider: 7,
     dividerLabel: "After Memorial Day — May 26 →",
     tasks:[
-      // ── Before Memorial Day — do NOW ──
       {t:"Confirm post-possession details in writing with your agent",    n:"You sell June 15 but stay until June 23 noon — get this in the contract", i:"critical", time:"30m", cost:0, u:true},
-      {t:"Book movers — June 22 at 8038 Springwater Dr W, same day to Pine Bluff", n:"⚠️ Still needs to be decided — book ASAP",             i:"critical", time:"1h",           cost:3, u:true},
+      {t:"Book movers — June 22 at 8038 Springwater Dr W, same day to Pine Bluff", n:"⚠️ Still needs to be decided — book ASAP", i:"critical", time:"1h", cost:3, u:true},
       {t:"Set up utilities at Pine Bluff starting June 22",              n:"Electric, gas, water, internet — 10878 Pine Bluff Dr 46037",  i:"critical", time:"1h",           cost:1, u:true},
       {t:"Sort and declutter — donate, sell, or toss before packing",    n:"Saves time and money on the move",                            i:"high",     time:"2–3 days",     cost:0},
       {t:"Buy packing supplies",                                         n:"Boxes, tape, bubble wrap, furniture pads, markers",           i:"high",     time:"1h",           cost:2},
       {t:"Gather important documents",                                   n:"IDs, closing docs, insurance, passports, medical",            i:"critical", time:"30m",          cost:0},
       {t:"Photograph all valuables for insurance records",               n:"",                                                            i:"high",     time:"1h",           cost:0},
-      // ── After Memorial Day ──
       {t:"Forward mail via USPS",                                        n:"usps.com — change to 10878 Pine Bluff Dr 46037",               i:"high",     time:"15m",          cost:0},
       {t:"Notify employer HR of new address (for tax/payroll)",          n:"",                                                            i:"medium",   time:"15m",          cost:0},
       {t:"Update address with bank and credit card companies",           n:"",                                                            i:"high",     time:"1h",           cost:0},
@@ -682,12 +645,10 @@ const phases = [
   }
 ];
 
-// ── STATE ──
 const KEY = 'moving-2026-v3';
 let state = JSON.parse(localStorage.getItem(KEY) || '{}');
 function save() { localStorage.setItem(KEY, JSON.stringify(state)); }
 
-// ── CONFETTI ──
 function burst(x, y) {
   const pal = ['#7c3aed','#c2410c','#1d4ed8','#065f46','#92400e','#f59e0b','#e11d48','#0891b2'];
   for (let i = 0; i < 18; i++) {
@@ -700,7 +661,6 @@ function burst(x, y) {
   }
 }
 
-// ── BUILD PROGRESS SEGMENTS ──
 function buildSegments() {
   const wrap = document.getElementById('pb-segments');
   wrap.innerHTML = '';
@@ -716,7 +676,6 @@ function buildSegments() {
   });
 }
 
-// ── PROGRESS ──
 function updateProgress() {
   let total = 0, done = 0;
   phases.forEach((p, pi) => {
@@ -732,7 +691,6 @@ function updateProgress() {
   document.getElementById('done-banner').classList.toggle('visible', done === total && total > 0);
 }
 
-// ── RENDER ──
 function render() {
   const root = document.getElementById('checklist');
   root.innerHTML = '';
@@ -744,7 +702,6 @@ function render() {
     const section = document.createElement('div');
     section.className = 'phase';
 
-    // banner
     const banner = document.createElement('div');
     banner.className = 'phase-banner';
     banner.innerHTML = `
@@ -763,11 +720,9 @@ function render() {
     `;
     section.appendChild(banner);
 
-    // tasks
     const list = document.createElement('div');
     list.className = 'task-list';
 
-    // leading label for phases with a divider
     if (phase.divider) {
       const lead = document.createElement('div');
       lead.className = 'phase-divider';
@@ -781,7 +736,6 @@ function render() {
     }
 
     phase.tasks.forEach((task, ti) => {
-      // inject divider between sub-sections
       if (phase.divider && ti === phase.divider) {
         const sep = document.createElement('div');
         sep.className = 'phase-divider';
