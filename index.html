@@ -516,7 +516,7 @@ footer {
     <div class="hero-right">
       <div class="date-card">
         <div class="date-card-label">Closing day</div>
-        <div class="date-card-value">June 15</div>
+        <div class="date-card-value">June 18</div>
         <div class="date-card-sub">Sell Springwater (stay put)</div>
       </div>
       <div class="date-card">
@@ -556,11 +556,11 @@ footer {
 <script>
 const phases = [
   {
-    num:"01", label:"Now → June 14", sub:"Pre-move prep", color:"#7c3aed",
+    num:"01", label:"Now → June 17", sub:"Pre-move prep", color:"#7c3aed",
     divider: 7,
     dividerLabel: "After Memorial Day — May 26 →",
     tasks:[
-      {t:"Confirm post-possession details in writing with your agent",    n:"You sell June 15 but stay until June 23 noon — get this in the contract", i:"critical", time:"30m", cost:0, u:true},
+      {t:"Confirm post-possession details in writing with your agent",    n:"You sell June 18 but stay until June 23 noon — get this in the contract", i:"critical", time:"30m", cost:0, u:true},
       {t:"Book movers — June 22 at 8038 Springwater Dr W, same day to Pine Bluff", n:"⚠️ Still needs to be decided — book ASAP", i:"critical", time:"1h", cost:3, u:true},
       {t:"Set up utilities at Pine Bluff starting June 22",              n:"Electric, gas, water, internet — 10878 Pine Bluff Dr 46037",  i:"critical", time:"1h",           cost:1, u:true},
       {t:"Sort and declutter — donate, sell, or toss before packing",    n:"Saves time and money on the move",                            i:"high",     time:"2–3 days",     cost:0},
@@ -580,7 +580,7 @@ const phases = [
     ]
   },
   {
-    num:"02", label:"June 15 — Closing Day", sub:"You sold your house! (but you stay 🏠)", color:"#c2410c",
+    num:"02", label:"June 18 — Closing Day", sub:"You sold your house! (but you stay 🏠)", color:"#c2410c",
     tasks:[
       {t:"Sign all closing documents",                                   n:"Coordinate with real estate attorney/agent",                  i:"critical", time:"2h",           cost:0},
       {t:"Confirm post-possession agreement is in place",                n:"You stay at Springwater until June 23 noon — verify in writing", i:"critical", time:"30m",      cost:0},
@@ -589,7 +589,7 @@ const phases = [
     ]
   },
   {
-    num:"03", label:"June 16–21 — Packing Week", sub:"Still at Springwater — final push", color:"#1d4ed8",
+    num:"03", label:"June 19–21 — Packing Week", sub:"Still at Springwater — final push", color:"#1d4ed8",
     tasks:[
       {t:"Finish packing and labeling every room",                       n:"The goal: everything in a box except essentials",             i:"critical", time:"several days", cost:0},
       {t:"Confirm movers for June 22 — time, truck size, access info",  n:"",                                                            i:"critical", time:"30m",          cost:0},
@@ -646,7 +646,8 @@ const phases = [
 ];
 
 const KEY = 'moving-2026-v3';
-let state = JSON.parse(localStorage.getItem(KEY) || '{}');
+const DEFAULTS = {"0-1":true,"0-3":true,"0-4":true,"0-5":true,"0-6":true,"0-13":true,"0-16":true};
+let state = JSON.parse(localStorage.getItem(KEY) || JSON.stringify(DEFAULTS));
 function save() { localStorage.setItem(KEY, JSON.stringify(state)); }
 
 function burst(x, y) {
