@@ -26,8 +26,8 @@ jobs:
           TO_NUMS     = os.environ["TWILIO_TO_NUMS"].split(",")
 
           today     = date.today()
-          move_day  = date(2026, 6, 22)   # movers arrive, move into Pine Bluff
-          final_out = date(2026, 6, 23)   # out of Springwater by noon
+          move_day  = date(2026, 6, 26)   # movers arrive, move into Pine Bluff
+          final_out = date(2026, 6, 27)   # out of Springwater by noon
 
           days_to_move = (move_day - today).days
 
@@ -39,7 +39,7 @@ jobs:
               d = days_to_move
               if d > 30:
                   msg = pick([
-                      f"📦 {d} days until move day (June 22). Plenty of runway! ...but maybe tackle that one junk drawer.",
+                      f"📦 {d} days until move day (June 26). Plenty of runway! ...but maybe tackle that one junk drawer.",
                       f"🏠 {d} days to go. Pine Bluff is out there waiting. It doesn't know how lucky it is.",
                       f"📋 {d} days until move day. Future you will be SO grateful present you started packing early.",
                   ])
@@ -51,7 +51,7 @@ jobs:
                   ])
               elif d > 14:
                   msg = pick([
-                      f"😬 {d} days until June 22. Time to stop pretending this isn't happening.",
+                      f"😬 {d} days until June 26. Time to stop pretending this isn't happening.",
                       f"⏳ {d} days. Every box you pack today is one less panic on move day.",
                       f"📅 {d} days out. Every drawer you clear now is a gift to future you.",
                   ])
@@ -69,29 +69,29 @@ jobs:
                          "If it's not packed by now it's getting donated. We don't make the rules.")
               elif d > 3:
                   msg = pick([
-                      f"🔥 {d} DAYS. Boxes everywhere is the vibe right now. Every box = one less crisis on June 22.",
+                      f"🔥 {d} DAYS. Boxes everywhere is the vibe right now. Every box = one less crisis on June 26.",
                       f"😤 {d} days. Essentials bag packed? Documents gathered? Fridge defrosted? GO.",
                       f"⏰ {d} days left. Home stretch. Pack fast, label everything, breathe.",
                   ])
               elif d == 3:
                   msg = ("⏰ 3 days to move day. Finish packing. Defrost the fridge. "
                          "Find the passports. You've got this (you're fine, totally fine). "
-                         "June 22 is almost here — Pine Bluff is waiting. 🏡")
+                         "June 26 is almost here — Pine Bluff is waiting. 🏡")
               elif d == 2:
-                  msg = ("😰 2 days to move day! Movers arrive June 22. "
+                  msg = ("😰 2 days to move day! Movers arrive June 26. "
                          "Get that essentials bag ready. Get some sleep. You're almost through it.")
               elif d == 1:
                   msg = ("🚨 TOMORROW IS MOVE DAY!! Set 3 alarms. Eat a real breakfast. "
-                         "Movers arrive June 22 — by tonight you'll be sleeping at Pine Bluff. "
+                         "Movers arrive June 26 — by tonight you'll be sleeping at Pine Bluff. "
                          "LET'S GO!! 💪🏡")
               else:
-                  msg = ("🚛🏡 TODAY IS JUNE 22 — MOVE DAY!! "
+                  msg = ("🚛🏡 TODAY IS JUNE 26 — MOVE DAY!! "
                          "Movers are coming. Load it up. Drive to Pine Bluff. Unload. "
                          "By tonight, 10878 Pine Bluff Dr is HOME. "
                          "YOU DID IT. GO GO GO!! 🔑🎉")
 
           elif today == final_out:
-              msg = ("⏰ TODAY IS JUNE 23 — LAST DAY AT SPRINGWATER. OUT BY NOON!! "
+              msg = ("⏰ TODAY IS JUNE 27 — LAST DAY AT SPRINGWATER. OUT BY NOON!! "
                      "Final sweep, final photos, hand over those keys. "
                      "Then head HOME to Pine Bluff — you already live there now. 🏡"
                      "Close the chapter. Start the next one. It's going to be amazing. 🎊")
