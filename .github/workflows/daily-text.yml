@@ -1,8 +1,6 @@
 name: Daily Moving Countdown Text
 
 on:
-  schedule:
-    - cron: '0 14 * * *'  # 10:00 AM EDT (UTC-4)
   workflow_dispatch:       # run manually anytime from the Actions tab
 
 jobs:
